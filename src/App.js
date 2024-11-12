@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Loading from "./pages/Loading";
 import Cookies from "js-cookie";
 import { db } from "./firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
@@ -11,6 +12,7 @@ import { doc, getDoc } from "firebase/firestore";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState(null);
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     const checkUserSession = async () => {
@@ -30,6 +32,8 @@ function App() {
       } else {
         handleLogout();
       }
+
+      setLoading(false); // Set loading to false after checking the session
     };
 
     checkUserSession();
@@ -39,13 +43,19 @@ function App() {
     Cookies.set("session", userId, { expires: 1 });
     setUsername(userName);
     setIsLoggedIn(true);
+    setLoading(false); // Ensure loading is false after login
   };
 
   const handleLogout = () => {
     Cookies.remove("session");
     setIsLoggedIn(false);
     setUsername(null);
+    setLoading(false); // Ensure loading is false after logout
   };
+
+  if (loading) {
+    return <Loading />; // Render loading page while session check is ongoing
+  }
 
   return (
     <Router>
