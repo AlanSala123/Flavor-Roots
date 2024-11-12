@@ -17,9 +17,30 @@
     animation: fadeIn 1s ease-out;
   }
   
+  .profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid white;
+    margin-bottom: 20px;
+    object-fit: cover;
+  }
+  
+  .profile-placeholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
   .home-username {
-    font-size: 1.5rem;
-    margin-bottom: 40px;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
   }
   
   .home-logout-button {

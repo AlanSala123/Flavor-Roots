@@ -38,8 +38,9 @@
     color: #f06;
   }
   
-  .signup-input::placeholder {
-    color: #f06;
+  .signup-input[type="file"] {
+    padding: 5px;
+    color: white;
   }
   
   .signup-button {

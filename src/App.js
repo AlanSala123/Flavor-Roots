@@ -11,50 +11,51 @@ import { doc, getDoc } from "firebase/firestore";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState(null);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [userId, setUserId] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkUserSession = async () => {
-      const userId = Cookies.get("session");
+      const storedUserId = Cookies.get("session");
 
-      if (userId) {
-        const userDocRef = doc(db, "users", userId);
-        const userDoc = await getDoc(userDocRef);
+      if (storedUserId) {
+        try {
+          const userDocRef = doc(db, "users", storedUserId);
+          const userDoc = await getDoc(userDocRef);
 
-        if (userDoc.exists()) {
-          const userData = userDoc.data();
-          setUsername(userData.username);
-          setIsLoggedIn(true);
-        } else {
+          if (userDoc.exists()) {
+            setUserId(storedUserId);
+            setIsLoggedIn(true);
+          } else {
+            handleLogout();
+          }
+        } catch (error) {
           handleLogout();
         }
       } else {
         handleLogout();
       }
 
-      setLoading(false); // Set loading to false after checking the session
+      setLoading(false);
     };
 
     checkUserSession();
   }, []);
 
-  const handleLogin = (userId, userName) => {
+  const handleLogin = (userId) => {
     Cookies.set("session", userId, { expires: 1 });
-    setUsername(userName);
+    setUserId(userId);
     setIsLoggedIn(true);
-    setLoading(false); // Ensure loading is false after login
   };
 
   const handleLogout = () => {
     Cookies.remove("session");
     setIsLoggedIn(false);
-    setUsername(null);
-    setLoading(false); // Ensure loading is false after logout
+    setUserId(null);
   };
 
   if (loading) {
-    return <Loading />; // Render loading page while session check is ongoing
+    return <Loading />;
   }
 
   return (
@@ -63,7 +64,7 @@ function App() {
         <Route path="/" element={<Navigate to={isLoggedIn ? "/home" : "/login"} />} />
         <Route path="/login" element={isLoggedIn ? <Navigate to="/home" /> : <Login onLogin={handleLogin} />} />
         <Route path="/signup" element={isLoggedIn ? <Navigate to="/home" /> : <Signup />} />
-        <Route path="/home" element={isLoggedIn ? <Home username={username} onLogout={handleLogout} /> : <Navigate to="/login" />} />
+        <Route path="/home" element={isLoggedIn ? <Home userId={userId} onLogout={handleLogout} /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );
