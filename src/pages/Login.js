@@ -1,22 +1,38 @@
 // src/pages/Login.js
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebaseConfig";
-import { useNavigate } from "react-router-dom";
+import { db } from "../firebaseConfig";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import bcrypt from "bcryptjs";
+import { useNavigate, Link } from "react-router-dom";
 
 function Login() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/home"); // Redirect to home after login
-    } catch (error) {
-      console.error("Login error:", error);
-      alert("Invalid login credentials");
+    const usersCollection = collection(db, "users");
+
+    // Check if username exists
+    const q = query(usersCollection, where("username", "==", username));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      alert("Invalid username or password");
+      return;
+    }
+
+    // Get stored hashed password
+    const userDoc = querySnapshot.docs[0];
+    const storedHashedPassword = userDoc.data().password;
+
+    // Compare entered password with stored hashed password
+    const isPasswordCorrect = await bcrypt.compare(password, storedHashedPassword);
+    if (isPasswordCorrect) {
+      navigate("/home");
+    } else {
+      alert("Invalid username or password");
     }
   };
 
@@ -25,19 +41,24 @@ function Login() {
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
         <button type="submit">Login</button>
       </form>
+
+      {/* Link to the signup page */}
+      <p>Don't have an account? <Link to="/signup">Sign up here</Link></p>
     </div>
   );
 }
