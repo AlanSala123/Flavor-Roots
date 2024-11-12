@@ -4,10 +4,12 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
 import Loading from "./pages/Loading";
 import Cookies from "js-cookie";
 import { db } from "./firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
+import "./styles/App.css"
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -65,6 +67,7 @@ function App() {
         <Route path="/login" element={isLoggedIn ? <Navigate to="/home" /> : <Login onLogin={handleLogin} />} />
         <Route path="/signup" element={isLoggedIn ? <Navigate to="/home" /> : <Signup />} />
         <Route path="/home" element={isLoggedIn ? <Home userId={userId} onLogout={handleLogout} /> : <Navigate to="/login" />} />
+        <Route path="/profile" element={isLoggedIn ? <Profile userId={userId} /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );

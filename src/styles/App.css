@@ -1,0 +1,9 @@
+:root {
+    --primary-gradient-start: #ff6f91;
+    --primary-gradient-end: #ff9671;
+    --accent-color: #ffd166;
+    --accent-color-dark: #ff9f1c;
+    --text-color-light: #ffffff;
+    --background-light: rgba(255, 255, 255, 0.1);
+    --background-lighter: rgba(255, 255, 255, 0.2);
+  }

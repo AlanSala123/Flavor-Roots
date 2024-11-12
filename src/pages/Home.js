@@ -1,47 +1,44 @@
 // src/pages/Home.js
-import React, { useEffect, useState } from "react";
-import { db } from "../firebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
+import React from "react";
+import { Link } from "react-router-dom";
 import "../styles/Home.css";
-import Loading from "./Loading";
 
-function Home({ userId, onLogout }) {
-  const [userData, setUserData] = useState(null);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (userId) {
-        try {
-          const userDocRef = doc(db, "users", userId);
-          const userDoc = await getDoc(userDocRef);
-
-          if (userDoc.exists()) {
-            setUserData(userDoc.data());
-          } else {
-          }
-        } catch (error) {
-        }
-      }
-    };
-
-    fetchUserData();
-  }, [userId]);
-
-  if (!userData) {
-    return <Loading />;
-  }
-
+function Home() {
   return (
     <div className="home-container">
-      <h2 className="home-header">Welcome to Flavor Roots, {userData.firstName}!</h2>
-      {userData.profilePicture ? (
-        <img src={userData.profilePicture} alt="Profile" className="profile-picture" />
-      ) : (
-        <div className="profile-placeholder">No Profile Picture</div>
-      )}
-      <p className="home-username">Name: {userData.firstName} {userData.lastName}</p>
-      <p className="home-username">Username: {userData.username}</p>
-      <button className="home-logout-button" onClick={onLogout}>Logout</button>
+      <header className="home-header">
+        <h1>Flavor Roots</h1>
+        <nav className="nav-bar">
+          <button className="nav-button active">Home</button>
+          <button className="nav-button">Trending</button>
+        </nav>
+        <div className="search-bar">
+          <input type="text" placeholder="Search" />
+        </div>
+        <Link to="/profile">
+          <button className="profile-button">Profile</button>
+        </Link>
+      </header>
+
+      <div className="content">
+        <aside className="followed-branches">
+          <h3>Followed Branches listed:</h3>
+          <button className="branch-button">Italian</button>
+          <button className="branch-button">French</button>
+          <button className="branch-button">Spanish</button>
+        </aside>
+
+        <section className="post-feed">
+          {[...Array(5)].map((_, index) => (
+            <div className="post" key={index}>
+              <div className="post-content">
+                <p>This is a post caption along with its branch and tags</p>
+              </div>
+              <div className="post-image-placeholder">Small post image</div>
+            </div>
+          ))}
+        </section>
+      </div>
     </div>
   );
 }

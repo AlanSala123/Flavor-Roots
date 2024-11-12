@@ -1,72 +1,145 @@
 /* src/styles/Home.css */
 
 .home-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #f06, #b2f7ef);
-    color: white;
-    text-align: center;
-  }
-  
-  .home-header {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    animation: fadeIn 1s ease-out;
-  }
-  
-  .profile-picture {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    border: 4px solid white;
-    margin-bottom: 20px;
-    object-fit: cover;
-  }
-  
-  .profile-placeholder {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    color: rgba(255, 255, 255, 0.7);
-  }
-  
-  .home-username {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-  }
-  
-  .home-logout-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: #f06;
-    background-color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .home-logout-button:hover {
-    background-color: #f06;
-    color: white;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+  min-height: 100vh;
+  color: var(--text-color-light);
+}
+
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  max-width: 1000px;
+  padding: 20px;
+  box-sizing: border-box;
+  color: var(--text-color-light);
+}
+
+.nav-bar {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-button {
+  background: transparent;
+  color: var(--text-color-light);
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: bold;
+  border-bottom: 3px solid transparent;
+  transition: 0.3s;
+}
+
+.nav-button.active,
+.nav-button:hover {
+  border-bottom: 3px solid var(--accent-color);
+}
+
+.search-bar input {
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 1px solid var(--accent-color);
+  width: 200px;
+  background-color: var(--text-color-light);
+  color: var(--text-color-dark);
+  outline: none;
+}
+
+.profile-button {
+  background-color: var(--accent-color);
+  color: var(--text-color-dark);
+  padding: 8px 15px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.profile-button:hover {
+  background-color: var(--accent-color-dark);
+}
+
+.content {
+  display: flex;
+  gap: 20px;
+  width: 90%;
+  max-width: 1000px;
+  margin-top: 20px;
+}
+
+.followed-branches {
+  flex: 1;
+  padding: 20px;
+  background-color: var(--background-light);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.followed-branches h3 {
+  color: var(--accent-color);
+  margin-bottom: 15px;
+}
+
+.branch-button {
+  display: block;
+  width: 100%;
+  background-color: var(--accent-color-dark);
+  color: var(--text-color-light);
+  border: none;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+  transition: background 0.3s;
+}
+
+.branch-button:hover {
+  background-color: var(--accent-color);
+}
+
+.post-feed {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.post {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: var(--background-light);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.post:hover {
+  transform: scale(1.02);
+}
+
+.post-content {
+  flex: 3;
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.post-image-placeholder {
+  flex: 1;
+  text-align: center;
+  color: var(--accent-color);
+  font-size: 0.9em;
+  background-color: var(--background-lighter);
+  padding: 15px;
+  border-radius: 8px;
+}
