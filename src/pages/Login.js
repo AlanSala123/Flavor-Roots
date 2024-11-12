@@ -5,7 +5,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import bcrypt from "bcryptjs";
 import { useNavigate, Link } from "react-router-dom";
 
-function Login() {
+function Login({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -26,11 +26,14 @@ function Login() {
     // Get stored hashed password
     const userDoc = querySnapshot.docs[0];
     const storedHashedPassword = userDoc.data().password;
+    const userId = userDoc.id;
 
     // Compare entered password with stored hashed password
     const isPasswordCorrect = await bcrypt.compare(password, storedHashedPassword);
     if (isPasswordCorrect) {
-      navigate("/home");
+      // Call the `onLogin` function from `App.js` and pass the userId and username
+      onLogin(userId, username);
+      navigate("/home", { replace: true });
     } else {
       alert("Invalid username or password");
     }
@@ -56,8 +59,6 @@ function Login() {
         />
         <button type="submit">Login</button>
       </form>
-
-      {/* Link to the signup page */}
       <p>Don't have an account? <Link to="/signup">Sign up here</Link></p>
     </div>
   );
