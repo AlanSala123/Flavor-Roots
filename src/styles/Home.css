@@ -1,0 +1,51 @@
+/* src/styles/Home.css */
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #f06, #b2f7ef);
+    color: white;
+    text-align: center;
+  }
+  
+  .home-header {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    animation: fadeIn 1s ease-out;
+  }
+  
+  .home-username {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+  }
+  
+  .home-logout-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #f06;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .home-logout-button:hover {
+    background-color: #f06;
+    color: white;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

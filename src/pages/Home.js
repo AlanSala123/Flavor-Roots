@@ -1,20 +1,13 @@
 // src/pages/Home.js
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import "../styles/Home.css";
 
 function Home({ username, onLogout }) {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    onLogout();
-    navigate("/login", { replace: true });
-  };
-
   return (
-    <div>
-      <h2>Welcome to your Home Page!</h2>
-      {username ? <p>Logged in as: {username}</p> : <p>Loading user data...</p>}
-      <button onClick={handleLogout}>Logout</button>
+    <div className="home-container">
+      <h2 className="home-header">Welcome to Flavor Roots</h2>
+      <p className="home-username">Logged in as: {username}</p>
+      <button className="home-logout-button" onClick={onLogout}>Logout</button>
     </div>
   );
 }
