@@ -39,6 +39,12 @@ function Home() {
           ))}
         </section>
       </div>
+
+      <div className="post-button-div">
+        <Link to="/post">
+          <button className="post-button">Post Recipe</button>
+        </Link>
+      </div>
     </div>
   );
 }

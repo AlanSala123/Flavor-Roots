@@ -1,0 +1,111 @@
+.post-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+    color: var(--text-color-light);
+    padding: 0 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: var(--background-light);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+form label {
+    font-size: 1em;
+    color: var(--text-color-dark);
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+form input[type="text"],
+form textarea,
+form input[type="file"] {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--accent-color);
+    background-color: var(--text-color-light);
+    color: black;
+    outline: none;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+form input[type="file"] {
+    padding: 8px 12px;
+}
+
+form textarea {
+    resize: vertical;
+    min-height: 100px; /* Ensures textarea has a decent height */
+}
+
+form button {
+    background-color: var(--accent-color);
+    color: var(--text-color-dark);
+    padding: 12px 20px;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+}
+
+form button:hover {
+    background-color: var(--accent-color-dark);
+}
+
+form input[type="text"]:focus,
+form textarea:focus {
+    border-color: var(--accent-color-dark);
+}
+
+/* Additional styling for the submit and cancel buttons */
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.submit-button,
+.cancel-button {
+    padding: 12px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 48%; /* Make both buttons take equal width */
+    box-sizing: border-box;
+}
+
+.submit-button {
+    background-color: var(--accent-color);
+    color: var(--text-color-dark);
+    border: none;
+}
+
+.submit-button:hover {
+    background-color: var(--accent-color-dark);
+}
+
+.cancel-button {
+    background-color: var(--background-light);
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+}
+
+.cancel-button:hover {
+    background-color: var(--accent-color-light);
+}

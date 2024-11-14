@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import Loading from "./pages/Loading";
+import Post from "./pages/Post";
 import Cookies from "js-cookie";
 import { db } from "./firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
@@ -68,6 +69,7 @@ function App() {
         <Route path="/signup" element={isLoggedIn ? <Navigate to="/home" /> : <Signup />} />
         <Route path="/home" element={isLoggedIn ? <Home userId={userId} onLogout={handleLogout} /> : <Navigate to="/login" />} />
         <Route path="/profile" element={isLoggedIn ? <Profile userId={userId} /> : <Navigate to="/login" />} />
+        <Route path="/post" element={isLoggedIn ? <Post userId={userId} /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );
