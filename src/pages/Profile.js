@@ -46,6 +46,10 @@ function Profile({ userId }) {
     }
   };
 
+  const handleBackClick = () => {
+    navigate("/home"); 
+};
+
   if (!userData) {
     return <Loading />;
   }
@@ -68,6 +72,7 @@ function Profile({ userId }) {
         <button onClick={handleLogout} className="logout-button">Log Out</button>
         <button onClick={handleDeleteAccount} className="delete-button">Delete Account</button>
       </div>
+      <button className="back-button" onClick={handleBackClick}>Back</button>
     </div>
   );
 }

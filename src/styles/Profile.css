@@ -67,3 +67,21 @@
     background-color: #ff1a1a;
   }
   
+  .back-button {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background-color: var(--accent-color);
+    color: var(--text-color-dark);
+    padding: 12px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    box-sizing: border-box;
+}
+
+.back-button:hover {
+    background-color: var(--accent-color-dark);
+}
+  
