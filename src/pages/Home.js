@@ -11,6 +11,7 @@ function Home() {
         <nav className="nav-bar">
           <button className="nav-button active">Home</button>
           <button className="nav-button">Trending</button>
+          <button className="nav-button">Branches</button>
         </nav>
         <div className="search-bar">
           <input type="text" placeholder="Search" />

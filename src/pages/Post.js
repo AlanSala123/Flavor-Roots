@@ -2,6 +2,9 @@ import React from "react";
 import {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Post.css";
+import { collection, addDoc } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage, db } from "../firebaseConfig";
 
 function Post({ userId }) {
     const navigate = useNavigate();
@@ -30,16 +33,43 @@ function Post({ userId }) {
         }));
     };
 
-     const handleSubmit = (e) => {
+     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Will need to add more here later
-        console.log(formData);
+        if (!formData.recipeName || !formData.recipe || !formData.branchName || !formData.caption) {
+            alert("Please fill in all required fields.");
+            return;
+        }
+        try {
+            let imageUrl = null;
+              // Upload the image if it exists
+            if (formData.image) {
+                const storageRef = ref(storage, `images/${formData.image.name}`);
+                await uploadBytes(storageRef, formData.image); 
+                imageUrl = await getDownloadURL(storageRef); 
+            }
+            // Save the form data to Firestore
+            const recipesCollection = collection(db, "recipes");
+            const recipeData = {
+                recipeName: formData.recipeName,
+                recipe: formData.recipe,
+                branchName: formData.branchName,
+                caption: formData.caption,
+                imageUrl: imageUrl || null, 
+                userId: formData.userId,
+                createdAt: new Date(),
+                likes: 0,
+            };
+            const docRef = await addDoc(recipesCollection, recipeData);
+            navigate(`/recipe/${docRef.id}`);
+        } catch (error) {
+            console.error("Error submitting the recipe: ", error);
+            alert("An error occurred while submitting the recipe. Please try again.");
+        }
     };
 
     const handleCancel = () => {
         navigate("/"); 
     };
-
 
     return (
         <div className="post-container">
