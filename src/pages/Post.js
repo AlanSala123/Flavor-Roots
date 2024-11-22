@@ -3,8 +3,7 @@ import {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Post.css";
 import { collection, addDoc } from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage, db } from "../firebaseConfig";
+import { db } from "../firebaseConfig";
 
 function Post({ userId }) {
     const navigate = useNavigate();
@@ -16,6 +15,15 @@ function Post({ userId }) {
         image: null,
         userId: userId
     });
+
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+        });
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -40,12 +48,9 @@ function Post({ userId }) {
             return;
         }
         try {
-            let imageUrl = null;
-              // Upload the image if it exists
+            let imageUrl = "";
             if (formData.image) {
-                const storageRef = ref(storage, `images/${formData.image.name}`);
-                await uploadBytes(storageRef, formData.image); 
-                imageUrl = await getDownloadURL(storageRef); 
+                imageUrl = await convertToBase64(formData.image);
             }
             // Save the form data to Firestore
             const recipesCollection = collection(db, "recipes");
