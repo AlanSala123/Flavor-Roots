@@ -26,8 +26,10 @@
     transform: scale(1.05); /* Scale up the card when hovered */
 }
 
-.recipe-card img {
-    max-width: 100%;
+.recipe-card-image {
+    max-width: 200px; /* Set a maximum width */
+    max-height: 200px; /* Set a maximum height */
+    width: auto; /* Allow width to adjust to preserve aspect ratio */
     height: auto;
     border-radius: 8px;
     margin-top: 20px;

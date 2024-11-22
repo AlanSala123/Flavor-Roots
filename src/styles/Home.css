@@ -73,6 +73,7 @@
   font-size: 1.1em; 
   transition: background 0.3s;
   margin-top: 30px;
+  margin-bottom: 50px;
 }
 
 .post-button:hover {
@@ -141,6 +142,21 @@
   transition: transform 0.3s;
 }
 
+.post-image {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-left: 15px;
+}
+
+.small-image {
+  max-width: 140px; 
+  max-height: 140px; 
+  object-fit: cover; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
 .post:hover {
   transform: scale(1.02);
 }
@@ -149,14 +165,10 @@
   flex: 3;
   color: var(--accent-color);
   font-weight: bold;
+  text-align: center;
+  align-items: center;
 }
 
-.post-image-placeholder {
-  flex: 1;
-  text-align: center;
-  color: var(--accent-color);
-  font-size: 0.9em;
-  background-color: var(--background-lighter);
-  padding: 15px;
-  border-radius: 8px;
+.post-link{
+  text-decoration: none;
 }

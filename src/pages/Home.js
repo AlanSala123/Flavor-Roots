@@ -1,9 +1,40 @@
-// src/pages/Home.js
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { collection, query, orderBy, getDocs } from "firebase/firestore";
+import { db } from "../firebaseConfig"; 
 import "../styles/Home.css";
 
 function Home() {
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const recipesRef = collection(db, "recipes");
+        const recipesQuery = query(recipesRef, orderBy("createdAt", "desc")); 
+        const querySnapshot = await getDocs(recipesQuery);
+
+        const fetchedRecipes = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        setRecipes(fetchedRecipes);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching recipes:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchRecipes();
+  }, []);
+
+  if (loading) {
+    return <div>Loading recipes...</div>;
+  }
+
   return (
     <div className="home-container">
       <header className="home-header">
@@ -30,14 +61,27 @@ function Home() {
         </aside>
 
         <section className="post-feed">
-          {[...Array(5)].map((_, index) => (
-            <div className="post" key={index}>
-              <div className="post-content">
-                <p>This is a post caption along with its branch and tags</p>
-              </div>
-              <div className="post-image-placeholder">Small post image</div>
-            </div>
-          ))}
+          {recipes.length === 0 ? (
+            <p>No recipes found</p>
+          ) : (
+            recipes.map((recipe) => (
+              <Link to={`/recipe/${recipe.id}`} key={recipe.id} className="post-link">
+                <div className="post">
+                  <div className="post-content">
+                    <p>{recipe.recipeName}</p>
+                    <p>Caption: {recipe.caption}</p>
+                  </div>
+                  <div className="post-image">
+                    <img
+                      src={recipe.imageUrl}
+                      alt={recipe.caption}
+                      className="small-image"
+                    />
+                  </div>
+                </div>
+              </Link>
+            ))
+          )}
         </section>
       </div>
 

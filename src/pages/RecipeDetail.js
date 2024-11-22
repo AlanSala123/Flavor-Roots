@@ -39,7 +39,7 @@ function RecipeDetail({ userId }) {
     return (
         <div className="recipe-detail-container">
             <div className="recipe-card">
-                <img src={recipe.imageUrl} alt={recipe.recipeName} />
+                <img src={recipe.imageUrl} alt={recipe.recipeName} className="recipe-card-image" />
                 <div className="recipe-card-content">
                     <h3>{recipe.recipeName}</h3>
                     <p><strong>Caption:</strong> {recipe.caption}</p>

@@ -30,6 +30,7 @@ function Profile({ userId }) {
   const handleLogout = () => {
     Cookies.remove("session");
     navigate("/login");
+    window.location.reload();
   };
 
   const handleDeleteAccount = async () => {
@@ -69,6 +70,7 @@ function Profile({ userId }) {
           <p><strong>Email:</strong> {userData.email}</p>
           <p><strong>Username:</strong> {userData.username}</p>
         </div>
+        <button className="previous-posts-button">Previous Posts</button>
         <button onClick={handleLogout} className="logout-button">Log Out</button>
         <button onClick={handleDeleteAccount} className="delete-button">Delete Account</button>
       </div>
