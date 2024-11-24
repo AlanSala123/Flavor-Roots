@@ -28,10 +28,6 @@ function RecipeDetail({ userId }) {
         fetchRecipe();
     }, [id]);
 
-    const handleBackClick = () => {
-        navigate("/home"); 
-    };
-
     if (!recipe) {
         return <div>Loading...</div>;
     }
@@ -48,7 +44,7 @@ function RecipeDetail({ userId }) {
                     <p><strong>Likes:</strong> {recipe.likes ?? 0}</p>
                 </div>
             </div>
-            <button className="back-button" onClick={handleBackClick}>Back</button>
+            <button className="back-button" onClick={() => navigate(-1)}>Back</button>
         </div>
     );
 }

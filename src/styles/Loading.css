@@ -6,8 +6,8 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
-    color: var(--text-color-light);
+    background: linear-gradient(135deg, #F9F3E1, #A8CBB7); /* Updated gradient to match site */
+    color: #333333; /* Dark text for readability */
     text-align: center;
     overflow: hidden;
 }
@@ -15,8 +15,8 @@
 .spinner {
     width: 60px;
     height: 60px;
-    border: 8px solid var(--background-lighter);
-    border-top: 8px solid var(--text-color-light);
+    border: 8px solid #DFAF3C; /* Golden Yellow for border */
+    border-top: 8px solid #F16C57; /* Tomato Red for spinning part */
     border-radius: 50%;
     animation: spin 1.2s linear infinite;
     margin-bottom: 20px;
@@ -34,14 +34,14 @@
 .loading-text {
     font-size: 2.5rem;
     font-weight: bold;
-    color: var(--text-color-light);
+    color: #333333; /* Dark text for contrast */
     animation: fadeInUp 1s ease forwards;
 }
 
 .loading-subtext {
     font-size: 1.2rem;
     margin-top: 10px;
-    color: var(--background-lighter);
+    color: #DFAF3C; /* Golden Yellow for the subtext */
     animation: fadeInUp 1s ease forwards;
     animation-delay: 0.5s;
 }

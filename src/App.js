@@ -12,6 +12,7 @@ import Cookies from "js-cookie";
 import { db } from "./firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import "./styles/App.css"
+import PreviousPosts from "./pages/PreviousPosts";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -72,6 +73,7 @@ function App() {
         <Route path="/profile" element={isLoggedIn ? <Profile userId={userId} /> : <Navigate to="/login" />} />
         <Route path="/post" element={isLoggedIn ? <Post userId={userId} /> : <Navigate to="/login" />} />
         <Route path="/recipe/:id" element={isLoggedIn ? <RecipeDetail userId={userId} /> : <Navigate to="/login" />} />
+        <Route path="/prevposts" element={isLoggedIn ? <PreviousPosts userId={userId} /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );

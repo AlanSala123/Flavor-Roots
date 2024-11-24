@@ -47,10 +47,6 @@ function Profile({ userId }) {
     }
   };
 
-  const handleBackClick = () => {
-    navigate("/home"); 
-};
-
   if (!userData) {
     return <Loading />;
   }
@@ -70,11 +66,11 @@ function Profile({ userId }) {
           <p><strong>Email:</strong> {userData.email}</p>
           <p><strong>Username:</strong> {userData.username}</p>
         </div>
-        <button className="previous-posts-button">Previous Posts</button>
+        <button onClick={() => navigate("/prevposts")} className="previous-posts-button">Previous Posts</button>
         <button onClick={handleLogout} className="logout-button">Log Out</button>
         <button onClick={handleDeleteAccount} className="delete-button">Delete Account</button>
       </div>
-      <button className="back-button" onClick={handleBackClick}>Back</button>
+      <button className="back-button" onClick={() => navigate("/home")}>Back</button>
     </div>
   );
 }

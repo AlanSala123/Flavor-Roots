@@ -1,10 +1,11 @@
+/* Post Recipe Form Styles */
 .post-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
-    color: var(--text-color-light);
+    background: linear-gradient(135deg, #F9F3E1, #A8CBB7); /* Matches home background gradient */
+    color: #333333; /* Dark text for readability */
     padding: 0 20px;
 }
 
@@ -12,18 +13,18 @@ form {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    background-color: var(--background-light);
+    background-color: #F9F3E1; /* Light warm cream color */
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
     max-width: 500px;
     width: 100%;
     box-sizing: border-box;
 }
 
 form label {
-    font-size: 1em;
-    color: var(--text-color-dark);
+    font-size: 1.1em;
+    color: #333333; /* Dark text for the label */
     font-weight: bold;
     margin-bottom: 8px;
 }
@@ -33,50 +34,52 @@ form textarea,
 form input[type="file"] {
     padding: 12px;
     border-radius: 8px;
-    border: 1px solid var(--accent-color);
-    background-color: var(--text-color-light);
-    color: black;
+    border: 1px solid #DFAF3C; /* Accent color for borders */
+    background-color: #F9F3E1; /* Matches the background */
+    color: #333333; /* Dark text for readability */
     outline: none;
     font-size: 1em;
     width: 100%;
     box-sizing: border-box;
+    transition: border-color 0.3s ease-in-out;
 }
 
 form input[type="file"] {
     padding: 8px 12px;
 }
 
+form input[type="text"]:focus,
+form textarea:focus {
+    border-color: #F16C57; /* Tomato red border on focus */
+    box-shadow: 0 0 5px rgba(241, 108, 87, 0.2); /* Soft red glow on focus */
+}
+
 form textarea {
     resize: vertical;
-    min-height: 100px; /* Ensures textarea has a decent height */
+    min-height: 150px; /* Ensures textarea has a decent height */
 }
 
 form button {
-    background-color: var(--accent-color);
-    color: var(--text-color-dark);
+    background-color: #DFAF3C; /* Accent color for buttons */
+    color: #333333; /* Dark text for the button */
     padding: 12px 20px;
     border: none;
     border-radius: 20px;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.2s ease;
     width: 100%;
 }
 
 form button:hover {
-    background-color: var(--accent-color-dark);
+    background-color: #B97C58; /* Darker shade on hover */
+    transform: translateY(-2px); /* Button hover lift effect */
 }
 
-form input[type="text"]:focus,
-form textarea:focus {
-    border-color: var(--accent-color-dark);
-}
-
-/* Additional styling for the submit and cancel buttons */
-.form-buttons {
+form .form-buttons {
     display: flex;
     justify-content: space-between;
-    gap: 10px;
+    gap: 15px;
 }
 
 .submit-button,
@@ -85,27 +88,42 @@ form textarea:focus {
     border-radius: 20px;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s;
-    width: 48%; /* Make both buttons take equal width */
+    transition: background 0.3s, transform 0.2s ease;
+    width: 48%; /* Equal button width */
     box-sizing: border-box;
 }
 
 .submit-button {
-    background-color: var(--accent-color);
-    color: var(--text-color-dark);
+    background-color: #DFAF3C; /* Accent color */
+    color: #333333;
     border: none;
 }
 
 .submit-button:hover {
-    background-color: var(--accent-color-dark);
+    background-color: #B97C58; /* Darker accent on hover */
+    transform: translateY(-2px); /* Button hover lift effect */
 }
 
 .cancel-button {
-    background-color: var(--background-light);
-    color: var(--accent-color);
-    border: 1px solid var(--accent-color);
+    background-color: #F9F3E1; 
+    color: #DFAF3C; 
+    border: 1px solid #DFAF3C; 
 }
 
 .cancel-button:hover {
-    background-color: var(--accent-color-light);
+    background-color: #F16C57; 
+    transform: translateY(-2px);
+}
+
+.submit-button:disabled,
+.cancel-button:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+}
+
+form input[type="text"]:disabled,
+form textarea:disabled,
+form input[type="file"]:disabled {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
 }
