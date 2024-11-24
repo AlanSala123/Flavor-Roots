@@ -69,7 +69,7 @@ function Home() {
                 <div className="post">
                   <div className="post-content">
                     <p>{recipe.recipeName}</p>
-                    <p>Caption: {recipe.caption}</p>
+                    <p>{recipe.caption}</p>
                   </div>
                   <div className="post-image">
                     <img

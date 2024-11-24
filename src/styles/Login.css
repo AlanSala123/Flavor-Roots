@@ -6,8 +6,8 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
-  color: var(--text-color-light);
+  background: linear-gradient(135deg, #F9F3E1, #A8CBB7); /* Warm Cream to Soft Sage Green gradient */
+  color: #333333; /* Deep Charcoal text color */
   text-align: center;
 }
 
@@ -15,40 +15,43 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--background-light);
-  padding: 20px;
-  border-radius: 10px;
-  backdrop-filter: blur(10px);
+  background-color: #FFFFFF; /* Pure white background for contrast */
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Soft shadow to make form pop */
+  backdrop-filter: blur(8px);
 }
 
 .login-header {
   font-size: 2rem;
+  color: #F16C57; /* Tomato Red accent */
   margin-bottom: 20px;
 }
 
 .login-input {
   width: 100%;
   max-width: 300px;
-  padding: 10px;
+  padding: 12px;
   margin: 10px 0;
   font-size: 1rem;
-  border: none;
+  border: 1px solid #DFAF3C; /* Golden Honey border */
   border-radius: 5px;
   outline: none;
-  color: var(--primary-gradient-start);
+  color: #333333; /* Deep Charcoal text */
+  background-color: #F9F3E1; /* Warm Cream background */
 }
 
 .login-input::placeholder {
-  color: var(--primary-gradient-start);
+  color: #A8CBB7; /* Soft Sage Green for placeholder */
 }
 
 .login-button {
   width: 100%;
   max-width: 300px;
-  padding: 10px;
+  padding: 12px;
   font-size: 1rem;
-  color: var(--primary-gradient-start);
-  background-color: var(--text-color-light);
+  color: #FFFFFF; /* White text */
+  background-color: #DFAF3C; /* Golden Honey background */
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -57,17 +60,17 @@
 }
 
 .login-button:hover {
-  background-color: var(--primary-gradient-start);
-  color: var(--text-color-light);
+  background-color: #F16C57; /* Tomato Red on hover */
+  color: #FFFFFF; /* White text on hover */
 }
 
 .signup-link {
   margin-top: 15px;
-  color: var(--text-color-light);
+  color: #333333; /* Deep Charcoal text */
   text-decoration: underline;
   cursor: pointer;
 }
 
 .signup-link:hover {
-  color: var(--primary-gradient-end);
+  color: #F16C57; /* Tomato Red hover effect */
 }

@@ -1,12 +1,10 @@
-/* src/styles/Home.css */
-
 .home-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+  background: linear-gradient(135deg, #F9F3E1, #A8CBB7); 
   min-height: 100vh;
-  color: var(--text-color-light);
+  color: #333333; 
 }
 
 .home-header {
@@ -17,7 +15,7 @@
   max-width: 1000px;
   padding: 20px;
   box-sizing: border-box;
-  color: var(--text-color-light);
+  color: #333333; 
 }
 
 .nav-bar {
@@ -27,7 +25,7 @@
 
 .nav-button {
   background: transparent;
-  color: var(--text-color-light);
+  color: #333333; 
   border: none;
   padding: 10px 15px;
   cursor: pointer;
@@ -38,22 +36,22 @@
 
 .nav-button.active,
 .nav-button:hover {
-  border-bottom: 3px solid var(--accent-color);
+  border-bottom: 3px solid #F16C57; 
 }
 
 .search-bar input {
   padding: 10px 15px;
   border-radius: 20px;
-  border: 1px solid var(--accent-color);
+  border: 1px solid #DFAF3C; 
   width: 200px;
-  background-color: var(--text-color-light);
-  color: var(--text-color-dark);
+  background-color: #F9F3E1; 
+  color: #333333; 
   outline: none;
 }
 
 .profile-button {
-  background-color: var(--accent-color);
-  color: var(--text-color-dark);
+  background-color: #DFAF3C; 
+  color: #333333;
   padding: 8px 15px;
   border: none;
   border-radius: 20px;
@@ -62,26 +60,26 @@
   transition: background 0.3s;
 }
 
+.profile-button:hover {
+  background-color: #B97C58; 
+}
+
 .post-button {
-  background-color: var(--accent-color);
-  color: var(--text-color-dark);
-  padding: 12px 20px; 
+  background-color: #DFAF3C; 
+  color: #333333; 
+  padding: 12px 20px;
   border: none;
   border-radius: 20px;
   cursor: pointer;
   font-weight: bold;
-  font-size: 1.1em; 
+  font-size: 1.1em;
   transition: background 0.3s;
   margin-top: 30px;
   margin-bottom: 50px;
 }
 
 .post-button:hover {
-  background-color: var(--accent-color-dark);
-}
-
-.profile-button:hover {
-  background-color: var(--accent-color-dark);
+  background-color: #B97C58; 
 }
 
 .content {
@@ -95,21 +93,21 @@
 .followed-branches {
   flex: 1;
   padding: 20px;
-  background-color: var(--background-light);
+  background-color: #F9F3E1; 
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .followed-branches h3 {
-  color: var(--accent-color);
+  color: #DFAF3C; 
   margin-bottom: 15px;
 }
 
 .branch-button {
   display: block;
   width: 100%;
-  background-color: var(--accent-color-dark);
-  color: var(--text-color-light);
+  background-color: #B97C58; 
+  color: #F9F3E1; 
   border: none;
   padding: 10px;
   margin-top: 10px;
@@ -121,7 +119,7 @@
 }
 
 .branch-button:hover {
-  background-color: var(--accent-color);
+  background-color: #F16C57; 
 }
 
 .post-feed {
@@ -136,10 +134,15 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background-color: var(--background-light);
+  background-color: #F9F3E1; 
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s;
+}
+
+.post:hover {
+  transform: scale(1.02);
+  background-color: #A8CBB7; 
 }
 
 .post-image {
@@ -150,25 +153,47 @@
 }
 
 .small-image {
-  max-width: 140px; 
-  max-height: 140px; 
-  object-fit: cover; 
-  border-radius: 8px; 
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-}
-
-.post:hover {
-  transform: scale(1.02);
+  max-width: 140px;
+  max-height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .post-content {
   flex: 3;
-  color: var(--accent-color);
+  color: black; 
   font-weight: bold;
   text-align: center;
   align-items: center;
 }
 
-.post-link{
+.post-link {
   text-decoration: none;
+  color: inherit; 
+}
+
+.post-link:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .followed-branches,
+  .post-feed {
+    width: 100%;
+  }
+
+  .post {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .small-image {
+    margin-top: 10px;
+  }
 }

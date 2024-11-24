@@ -1,110 +1,106 @@
-/* src/styles/Profile.css */
-
+/* Profile Page Styles */
 .profile-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    color: var(--text-color-light);
-    background: var(--primary-gradient-start);
-    min-height: 100vh;
-    text-align: center;
-  }
-  
-  .profile-info {
-    background-color: var(--background-light);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 500px;
-    width: 100%;
-    text-align: center;
-  }
-  
-  .profile-picture {
-    width: 120px; /* Fixed size */
-    height: 120px;
-    border-radius: 50%; /* Make it circular */
-    margin-bottom: 20px;
-    object-fit: cover; /* Keep aspect ratio */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-  }
-  
-  .profile-details p {
-    margin: 5px 0;
-    color: var(--text-color-light);
-  }
-  
-  .delete-button {
-    width: 100%;
-    max-width: 200px;
-    padding: 10px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s, color 0.3s;
-    margin: 10px 0;
-  }
-  
-  .delete-button {
-    background-color: #ff4d4d; /* Red color for delete action */
-    color: var(--text-color-light);
-  }
-  
-  .delete-button:hover {
-    background-color: #ff1a1a;
-  }
-  
-  .back-button {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    background-color: var(--accent-color);
-    color: var(--text-color-dark);
-    padding: 12px 20px;
-    border-radius: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  color: var(--text-color-light);
+  background: linear-gradient(135deg, #F9F3E1, #A8CBB7); /* Warm gradient from Cream to Soft Sage Green */
+  min-height: 100vh;
+  text-align: center;
+}
+
+.profile-info {
+  background-color: #FFFFFF; /* White background for profile card */
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+}
+
+.profile-picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%; /* Circular profile picture */
+  margin-bottom: 20px;
+  object-fit: cover;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.profile-details p {
+  margin: 5px 0;
+  font-size: 1.1em;
+  color: #333333; /* Deep Charcoal text color */
+}
+
+.delete-button {
+  width: 100%;
+  max-width: 200px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  margin: 10px 0;
+  background-color: #FF4D4D; /* Red color for delete button */
+  color: var(--text-color-light);
+}
+
+.delete-button:hover {
+  background-color: #FF1A1A; /* Darker red on hover */
+}
+
+.back-button {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background-color: #DFAF3C; /* Golden Honey for Back button */
+  color: #333333; /* Deep Charcoal text color */
+  padding: 12px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+  box-sizing: border-box;
 }
 
 .back-button:hover {
-    background-color: var(--accent-color-dark);
+  background-color: #F16C57; /* Tomato Red on hover */
 }
 
 .previous-posts-button, .logout-button {
   width: 100%;
   max-width: 200px;
-  padding: 12px; 
+  padding: 12px;
   font-size: 1rem;
+  font-weight: bold;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-weight: bold;
-  background-color: var(--accent-color);
-  color: var(--text-color-light);
   transition: background-color 0.3s, transform 0.2s;
   margin: 10px 0;
+  background-color: #DFAF3C; /* Golden Honey for both buttons */
+  color: var(--text-color-dark);
 }
 
-.previous-posts-button:hover {
-  background-color: var(--accent-color-dark);
+.previous-posts-button:hover, .logout-button:hover {
+  background-color: #F16C57;
   transform: translateY(-2px); 
 }
 
-.previous-posts-button:active {
+.previous-posts-button:active, .logout-button:active {
   transform: translateY(0); 
 }
 
-.logout-button:hover {
-  background-color: var(--accent-color-dark);
-  transform: translateY(-2px); 
+.profile-info, .previous-posts-button, .logout-button, .delete-button {
+  transition: transform 0.3s ease-in-out;
 }
 
-.logout-button:active {
-  transform: translateY(0); 
+.delete-button:disabled, .previous-posts-button:disabled, .logout-button:disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
 }
-  
