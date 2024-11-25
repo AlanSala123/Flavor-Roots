@@ -1,0 +1,113 @@
+.liked-posts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, #F9F3E1, #A8CBB7); 
+    min-height: 100vh;
+    padding: 20px 0;
+    color: #333333; 
+  }
+  
+  .liked-posts-header {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #F16C57; 
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .liked-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px;
+    width: 90%; 
+    max-width: 1200px; 
+    margin: 0 auto; 
+  }
+  
+  .liked-post-card {
+    background-color: #F9F3E1; /* Warm Cream */
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+  }
+  
+  .liked-post-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    background-color: #A8CBB7;
+  }
+  
+  .liked-post-card-link {
+    text-decoration: none;
+  }
+  
+  .liked-post-card-image {
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+  }
+  
+  .liked-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .liked-post-card-content {
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .liked-post-card-content h3 {
+    font-size: 1.2rem;
+    color: #F16C57;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .liked-post-card-content p {
+    font-size: 0.9rem;
+    color: #333333;
+  }
+  
+  .liked-card-link {
+    background-color: #DFAF3C;
+    color: #333333;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 12px;
+    transition: background 0.3s;
+    display: inline-block;
+    margin-top: 10px;
+  }
+  
+  .liked-card-link:hover {
+    background-color: #B97C58;
+  }
+  
+  .liked-back-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #F16C57;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .liked-back-button:hover {
+    background-color: #A8CBB7; 
+  }
+  

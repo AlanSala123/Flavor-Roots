@@ -63,9 +63,9 @@ function Profile({ userId }) {
         <div className="profile-details">
           <p><strong>First Name:</strong> {userData.firstName}</p>
           <p><strong>Last Name:</strong> {userData.lastName}</p>
-          <p><strong>Email:</strong> {userData.email}</p>
           <p><strong>Username:</strong> {userData.username}</p>
         </div>
+        <button onClick={() => navigate("/likedposts")} className="liked-posts-button">Liked Posts</button>
         <button onClick={() => navigate("/prevposts")} className="previous-posts-button">Previous Posts</button>
         <button onClick={handleLogout} className="logout-button">Log Out</button>
         <button onClick={handleDeleteAccount} className="delete-button">Delete Account</button>

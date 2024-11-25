@@ -72,7 +72,7 @@
   background-color: #F16C57; /* Tomato Red on hover */
 }
 
-.previous-posts-button, .logout-button {
+.previous-posts-button,.liked-posts-button {
   width: 100%;
   max-width: 200px;
   padding: 12px;
@@ -86,9 +86,28 @@
   background-color: #DFAF3C; /* Golden Honey for both buttons */
   color: var(--text-color-dark);
 }
+.logout-button {
+  width: 100%;
+  max-width: 200px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin: 10px 0;
+  background-color: rgb(82, 144, 164);
+  color: var(--text-color-dark);
+}
 
-.previous-posts-button:hover, .logout-button:hover {
-  background-color: #F16C57;
+.previous-posts-button:hover, .liked-posts-button:hover {
+  background-color: #edc254;
+  transform: translateY(-2px); 
+}
+
+.logout-button:hover {
+  background-color: darkcyan;
   transform: translateY(-2px); 
 }
 

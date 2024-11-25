@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig"; 
 import "../styles/PreviousPosts.css"; 
+import Loading from "./Loading";
 
 function PreviousPosts({ userId }) {
   const [userPosts, setUserPosts] = useState([]);
@@ -33,13 +34,13 @@ function PreviousPosts({ userId }) {
   }, [userId]);
 
   if (loading) {
-    return <div>Loading your posts...</div>;
+    return <Loading />;
   }
 
   return (
     <div className="previous-posts-container">
       <header className="previous-posts-header">
-        <h2>Your Previous Posts</h2>
+        <h2>Previous Posts</h2>
       </header>
 
       {userPosts.length === 0 ? (
