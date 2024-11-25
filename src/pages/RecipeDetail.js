@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { doc, getDoc, updateDoc, arrayUnion, arrayRemove, increment } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import "../styles/RecipeDetail.css";
@@ -12,6 +12,7 @@ function RecipeDetail({ userId }) {
     const [isLiked, setIsLiked] = useState(false);
     const [likeNum, setLikeNum] = useState(0);
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         const fetchRecipe = async () => {
@@ -46,7 +47,15 @@ function RecipeDetail({ userId }) {
 
         fetchRecipe();
         fetchUserLikes();
-    }, [id]);
+    }, [id, userId]);
+
+    const handleBackClick = () => {
+        if (location.state?.from === "/post") {
+            navigate("/home");
+        } else {
+            navigate(-1);
+        }
+    };
 
     const handleLikeClick = async () => {
         try {
@@ -108,7 +117,7 @@ function RecipeDetail({ userId }) {
                     stroke={isLiked ? 'none' : '#DFAF3C'}
                 />
             </div>
-            <button className="back-button" onClick={() => navigate(-1)}>Back</button>
+            <button className="back-button" onClick={handleBackClick}>Back</button>
         </div>
     );
 }

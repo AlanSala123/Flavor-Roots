@@ -65,7 +65,7 @@ function Post({ userId }) {
                 likes: 0,
             };
             const docRef = await addDoc(recipesCollection, recipeData);
-            navigate(`/recipe/${docRef.id}`);
+            navigate(`/recipe/${docRef.id}`, { state: { from: "/post" } });
         } catch (error) {
             console.error("Error submitting the recipe: ", error);
             alert("An error occurred while submitting the recipe. Please try again.");
