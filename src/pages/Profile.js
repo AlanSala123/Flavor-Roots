@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import "../styles/Profile.css";
 import Loading from "./Loading";
+import { Pencil } from 'lucide-react';
 
 function Profile({ userId }) {
   const [userData, setUserData] = useState(null);
@@ -71,6 +72,10 @@ function Profile({ userId }) {
         <button onClick={handleDeleteAccount} className="delete-button">Delete Account</button>
       </div>
       <button className="back-button" onClick={() => navigate("/home")}>Back</button>
+      <button className="edit-button" onClick={() => navigate("/editprofile")}>
+        <Pencil size={16} style={{ marginRight: "8px" }} />
+        Edit Profile
+      </button>
     </div>
   );
 }

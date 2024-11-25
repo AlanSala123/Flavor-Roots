@@ -3,10 +3,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center; /* Center vertically */
   padding: 20px;
   color: var(--text-color-light);
   background: linear-gradient(135deg, #F9F3E1, #A8CBB7); /* Warm gradient from Cream to Soft Sage Green */
-  min-height: 100vh;
+  min-height: 100vh; /* Make sure it takes the full height of the viewport */
   text-align: center;
 }
 
@@ -122,4 +123,27 @@
 .delete-button:disabled, .previous-posts-button:disabled, .logout-button:disabled {
   background-color: #d3d3d3;
   cursor: not-allowed;
+}
+
+.edit-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center; /* Center icon and text vertically */
+  background-color: #DFAF3C; /* Golden Honey */
+  color: #333333; /* Deep Charcoal */
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.edit-button:hover {
+  background-color: #ead114; 
+  transform: scale(1.1);
 }

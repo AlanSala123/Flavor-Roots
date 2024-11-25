@@ -14,6 +14,7 @@ import { doc, getDoc } from "firebase/firestore";
 import "./styles/App.css"
 import PreviousPosts from "./pages/PreviousPosts";
 import LikedPosts from "./pages/LikedPosts";
+import EditProfile from "./pages/EditProfile";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -76,6 +77,7 @@ function App() {
         <Route path="/recipe/:id" element={isLoggedIn ? <RecipeDetail userId={userId} /> : <Navigate to="/login" />} />
         <Route path="/prevposts" element={isLoggedIn ? <PreviousPosts userId={userId} /> : <Navigate to="/login" />} />
         <Route path="/likedposts" element={isLoggedIn ? <LikedPosts userId={userId} /> : <Navigate to="/login" />} />
+        <Route path="/editprofile" element={isLoggedIn ? <EditProfile userId={userId} /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );
