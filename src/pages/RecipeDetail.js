@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom"; 
-import { doc, getDoc } from "firebase/firestore";
+import { useParams, useNavigate } from "react-router-dom";
+import { doc, getDoc, updateDoc, arrayUnion, arrayRemove, increment } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import "../styles/RecipeDetail.css";
+import Loading from "./Loading";
+import { ThumbsUp } from 'lucide-react';
 
 function RecipeDetail({ userId }) {
     const { id } = useParams();
     const [recipe, setRecipe] = useState(null);
-    const navigate = useNavigate(); 
+    const [isLiked, setIsLiked] = useState(false);
+    const [likeNum, setLikeNum] = useState(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchRecipe = async () => {
@@ -17,6 +21,7 @@ function RecipeDetail({ userId }) {
 
                 if (docSnap.exists()) {
                     setRecipe(docSnap.data());
+                    setLikeNum(docSnap.data().likes || 0)
                 } else {
                     console.log("No such recipe!");
                 }
@@ -25,11 +30,56 @@ function RecipeDetail({ userId }) {
             }
         };
 
+        const fetchUserLikes = async () => {
+            try {
+                const userRef = doc(db, "users", userId);
+                const userDoc = await getDoc(userRef);
+                if (userDoc.exists()) {
+                    setIsLiked(userDoc.data().likedPosts.includes(id));
+                } else {
+                    console.log("User not found!");
+                }
+            } catch (error) {
+                console.error("Error fetching user likes: ", error);
+            }
+        };
+
         fetchRecipe();
+        fetchUserLikes();
     }, [id]);
 
+    const handleLikeClick = async () => {
+        try {
+            const userRef = doc(db, "users", userId);
+            const userDoc = await getDoc(userRef);
+            const recipeRef = doc(db, "recipes", id);
+
+            if (userDoc.data().likedPosts.includes(id)) {
+                await updateDoc(userRef, {
+                    likedPosts: arrayRemove(id)
+                });
+                await updateDoc(recipeRef, {
+                    likes: increment(-1)
+                });
+                setLikeNum(likeNum - 1);
+                setIsLiked(!isLiked);
+            } else {
+                await updateDoc(userRef, {
+                    likedPosts: arrayUnion(id)
+                });
+                await updateDoc(recipeRef, {
+                    likes: increment(1)
+                });
+                setLikeNum(likeNum + 1);
+                setIsLiked(!isLiked);
+            }
+        } catch (error) {
+            console.error("Error updating liked posts: ", error);
+        }
+    };
+
     if (!recipe) {
-        return <div>Loading...</div>;
+        return <Loading />;
     }
 
     return (
@@ -41,8 +91,22 @@ function RecipeDetail({ userId }) {
                     <p><strong>Caption:</strong> {recipe.caption}</p>
                     <p><strong>Recipe:</strong> {recipe.recipe}</p>
                     <p><strong>Branch:</strong> {recipe.branchName}</p>
-                    <p><strong>Likes:</strong> {recipe.likes ?? 0}</p>
+                    <p><strong>Likes:</strong> {likeNum ?? 0}</p>
                 </div>
+                <ThumbsUp
+                    onClick={handleLikeClick}
+                    style={{
+                        position: 'absolute',
+                        bottom: '20px',
+                        right: '20px',
+                        cursor: 'pointer',
+                        color: isLiked ? '#DFAF3C' : '#DFAF3C',
+                        transform: isLiked ? 'scale(1.2)' : 'scale(1)',
+                        transition: 'transform 0.3s ease-in-out, color 0.3s ease-in-out',
+                        fill: isLiked ? '#DFAF3C' : 'none'
+                    }}
+                    stroke={isLiked ? 'none' : '#DFAF3C'}
+                />
             </div>
             <button className="back-button" onClick={() => navigate(-1)}>Back</button>
         </div>
