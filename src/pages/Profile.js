@@ -41,6 +41,7 @@ function Profile({ userId }) {
         Cookies.remove("session");
         alert("Your account has been deleted.");
         navigate("/signup");
+        window.location.reload();
       } catch (error) {
         console.error("Error deleting account:", error);
         alert("There was an error deleting your account. Please try again.");

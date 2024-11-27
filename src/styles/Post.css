@@ -127,3 +127,38 @@ form input[type="file"]:disabled {
     background-color: #f0f0f0;
     cursor: not-allowed;
 }
+
+select {
+    width: 100%; 
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #DFAF3C; 
+    border-radius: 5px; 
+    background-color: #F9F3E1; 
+    color: #333; 
+    appearance: none; 
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 15px;
+}
+
+select:hover {
+    border-color: #007BFF; 
+}
+
+select:focus {
+    outline: none; 
+    border-color: #007BFF; 
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
+}
+
+option {
+    padding: 10px;
+    background-color: #fff; 
+    color: #333; 
+}

@@ -77,8 +77,6 @@ function EditProfile({ userId }) {
                 username: formData.username,
                 profilePicture: profilePictureUrl || formData.profilePicture,
             });
-
-            alert("Profile updated successfully.");
             navigate("/profile");
         } catch (error) {
             console.error("Error updating profile: ", error);
