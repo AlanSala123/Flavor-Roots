@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { collection, query, orderBy, getDocs } from "firebase/firestore";
+import { collection, query, orderBy, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig"; 
 import "../styles/Home.css";
 
-function Home() {
+function Home({userId, onLogout}) {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [firstName, setFirstName] = useState("");
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -28,8 +29,27 @@ function Home() {
       }
     };
 
+    const fetchUserFirstName = async () => {
+      if(userId) {
+        try {
+          const userDocRef = doc(db, "users", userId);
+          const userDoc = await getDoc(userDocRef);
+
+          if(userDoc.exists()) {
+            const userData = userDoc.data();
+            setFirstName(userData.firstName || "");
+          } else {
+            console.error("User document does not exist");
+          }
+        } catch (error) {
+          console.error("Error fetching user first name:", error);
+        }
+      }
+    };
+
     fetchRecipes();
-  }, []);
+    fetchUserFirstName();
+  }, [userId]);
 
   if (loading) {
     return <div>Loading recipes...</div>;
@@ -47,17 +67,25 @@ function Home() {
         <div className="search-bar">
           <input type="text" placeholder="Search" />
         </div>
-        <Link to="/profile">
-          <button className="profile-button">Profile</button>
+        <Link to ={userId ? "/profile" : "/login"}>
+          <button className="profile-button">
+            {userId ? `Hi, ${firstName}` : "Sign In"}
+          </button>
         </Link>
       </header>
 
       <div className="content">
         <aside className="followed-branches">
-          <h3>Followed Branches listed:</h3>
-          <button className="branch-button">Italian</button>
-          <button className="branch-button">French</button>
-          <button className="branch-button">Spanish</button>
+          <h3>Followed Branches</h3>
+          {userId ? (
+            <>
+              <button className="branch-button">Italian</button>
+              <button className="branch-button">French</button>
+              <button className="branch-button">Spanish</button>
+            </>
+          ) : (
+            <p>Sign in to view</p>
+          )}
         </aside>
 
         <section className="post-feed">

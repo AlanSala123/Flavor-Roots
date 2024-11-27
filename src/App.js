@@ -68,10 +68,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to={isLoggedIn ? "/home" : "/login"} />} />
+        <Route path="/" element={<Navigate to="/home" />} />
+        {/* <Route path="/" element={<Navigate to={isLoggedIn ? "/home" : "/login"} />} /> */}
         <Route path="/login" element={isLoggedIn ? <Navigate to="/home" /> : <Login onLogin={handleLogin} />} />
         <Route path="/signup" element={isLoggedIn ? <Navigate to="/home" /> : <Signup />} />
-        <Route path="/home" element={isLoggedIn ? <Home userId={userId} onLogout={handleLogout} /> : <Navigate to="/login" />} />
+        <Route path="/home" element={<Home userId={userId} onLogout={handleLogout} />}/>
         <Route path="/profile" element={isLoggedIn ? <Profile userId={userId} /> : <Navigate to="/login" />} />
         <Route path="/post" element={isLoggedIn ? <Post userId={userId} /> : <Navigate to="/login" />} />
         <Route path="/recipe/:id" element={isLoggedIn ? <RecipeDetail userId={userId} /> : <Navigate to="/login" />} />

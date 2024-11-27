@@ -101,6 +101,15 @@
 .followed-branches h3 {
   color: #DFAF3C; 
   margin-bottom: 15px;
+  text-align: center;
+}
+
+.followed-branches p {
+  flex: 3;
+  color: black; 
+  font-weight: bold;
+  text-align: center;
+  align-items: center;
 }
 
 .branch-button {
