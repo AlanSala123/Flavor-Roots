@@ -1,0 +1,80 @@
+.branch-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, #F9F3E1, #A8CBB7);
+    min-height: 100vh;
+    padding: 20px 0;
+    color: #333333;
+}
+
+.branch-detail-header {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #F16C57;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.branch-detail-recipes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.branch-detail-card {
+    background-color: #F9F3E1; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.branch-detail-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    background-color: #A8CBB7;
+}
+
+.branch-detail-card-image {
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+}
+
+.branch-detail-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.branch-detail-card-content {
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.branch-detail-card-content h3 {
+    font-size: 1.2rem;
+    color: #F16C57;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.branch-detail-card-content p {
+    font-size: 0.9rem;
+    color: #333333;
+}
+
+.branch-detail-link{
+    text-decoration: none;
+}

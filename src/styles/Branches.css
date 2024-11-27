@@ -1,0 +1,301 @@
+/* branches.css */
+.branches-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, #F9F3E1, #A8CBB7);
+    min-height: 100vh;
+    color: #333333;
+}
+
+.branches-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1000px;
+    padding: 20px;
+    box-sizing: border-box;
+    color: #333333;
+}
+
+.branches-nav-bar {
+    display: flex;
+    gap: 15px;
+}
+
+.branches-nav-button {
+    background: transparent;
+    color: #333333;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: bold;
+    border-bottom: 3px solid transparent;
+    transition: 0.3s;
+}
+
+.branches-nav-button.active,
+.branches-nav-button:hover {
+    border-bottom: 3px solid #F16C57;
+}
+
+.branches-search-bar input {
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: 1px solid #DFAF3C;
+    width: 200px;
+    background-color: #F9F3E1;
+    color: #333333;
+    outline: none;
+}
+
+.branches-profile-button {
+    background-color: #DFAF3C;
+    color: #333333;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.branches-profile-button:hover {
+    background-color: #B97C58;
+}
+
+.branches-content {
+    display: flex;
+    gap: 20px;
+    width: 90%;
+    max-width: 1000px;
+    margin-top: 20px;
+}
+
+.branches-followed-branches {
+    flex: 1;
+    padding: 20px;
+    background-color: #F9F3E1;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.branches-followed-branches h3 {
+    color: #DFAF3C;
+    margin-bottom: 15px;
+}
+
+.branches-branch-button {
+    display: block;
+    width: 100%;
+    background-color: #B97C58;
+    color: #F9F3E1;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    transition: background 0.3s;
+}
+
+.branches-branch-button:hover {
+    background-color: #F16C57;
+}
+
+.branches-post-feed {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.branches-post {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #F9F3E1;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+}
+
+.branches-post:hover {
+    transform: scale(1.02);
+    background-color: #A8CBB7;
+}
+
+.branches-post-image {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-left: 15px;
+}
+
+.branches-small-image {
+    max-width: 140px;
+    max-height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.branches-post-content {
+    flex: 3;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    align-items: center;
+}
+
+.branches-post-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.branches-post-link:hover {
+    opacity: 0.8;
+}
+
+.branches-post-button-div {
+    position: fixed; /* Keeps the button fixed to the viewport */
+    bottom: 20px; /* Distance from the bottom of the page */
+    right: 30px; /* Distance from the right of the page */
+    z-index: 1000; /* Ensures it stays on top of other elements */
+  }
+  
+  .branches-post-button {
+    background-color: #FF5722; /* Red button color */
+    color: #FFFFFF; /* Text color to white */
+    padding: 12px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1em;
+    transition: background 0.3s;
+  }
+  
+  .branches-post-button:hover {
+    background-color: #E64A19; /* Darker red on hover */
+  }
+
+@media (max-width: 768px) {
+    .branches-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .branches-followed-branches,
+    .branches-post-feed {
+        width: 100%;
+    }
+
+    .branches-post {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .branches-small-image {
+        margin-top: 10px;
+    }
+}
+
+.branches-post-feed {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.branches-branch-card {
+    position: relative; /* Ensure child elements like recipe count are positioned within the card */
+    background-color: #F9F3E1;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.branches-branch-card:hover {
+    transform: translateY(-5px);
+    /* Slight hover effect */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+.branches-branch-card-content {
+    flex: 1;
+    /* Allow content to take up available space */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.branches-branch-country {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin: 10px 0;
+    text-transform: capitalize;
+}
+
+.branches-branch-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.branches-square-plus {
+    position: absolute;
+    bottom: 10px; /* Adjust spacing from the bottom */
+    right: 10px; /* Adjust spacing from the right */
+    background-color: #F9F3E1;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px; /* Add padding around the icon */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.branches-square-plus:hover {
+    background-color: #f0f0f0; /* Slight hover effect */
+}
+
+.branches-recipe-count {
+    position: absolute;
+    top: 10px; /* Adjust spacing from the top */
+    left: 10px; /* Adjust spacing from the left */
+    background-color: #FF5722; /* Distinct background color */
+    color: #FFFFFF; /* Text color */
+    border-radius: 12px; /* Rounded corners */
+    padding: 4px 8px; /* Add padding for text and icon */
+    display: flex;
+    align-items: center; /* Center the icon and text vertically */
+    gap: 4px; /* Space between the icon and text */
+    font-size: 14px; /* Adjust text size */
+    font-weight: bold; /* Make the text stand out */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+.branches-recipe-icon {
+    color: #FFFFFF; /* Icon color */
+}
+
+.branch-link {
+    text-decoration: none;
+}

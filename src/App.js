@@ -15,6 +15,8 @@ import "./styles/App.css"
 import PreviousPosts from "./pages/PreviousPosts";
 import LikedPosts from "./pages/LikedPosts";
 import EditProfile from "./pages/EditProfile";
+import Branches from "./pages/Branches";
+import BranchDetail from "./pages/BranchDetail";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -79,6 +81,8 @@ function App() {
         <Route path="/prevposts" element={isLoggedIn ? <PreviousPosts userId={userId} /> : <Navigate to="/login" />} />
         <Route path="/likedposts" element={isLoggedIn ? <LikedPosts userId={userId} /> : <Navigate to="/login" />} />
         <Route path="/editprofile" element={isLoggedIn ? <EditProfile userId={userId} /> : <Navigate to="/login" />} />
+        <Route path="/branches" element={isLoggedIn ? <Branches userId={userId} /> : <Navigate to="/login" />} />
+        <Route path="/branches/:branchId" element={isLoggedIn ? <BranchDetail userId={userId} /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );

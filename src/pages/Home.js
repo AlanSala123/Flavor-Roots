@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { collection, query, orderBy, getDocs, doc, getDoc } from "firebase/firestore";
-import { db } from "../firebaseConfig"; 
+import { Link, useNavigate } from "react-router-dom";
+import { db } from "../firebaseConfig";
 import "../styles/Home.css";
+import Loading from "./Loading";
+import { CirclePlus } from 'lucide-react';
 
-function Home({userId, onLogout}) {
+function Home({ userId, onLogout }) {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [firstName, setFirstName] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
         const recipesRef = collection(db, "recipes");
-        const recipesQuery = query(recipesRef, orderBy("createdAt", "desc")); 
+        const recipesQuery = query(recipesRef, orderBy("createdAt", "desc"));
         const querySnapshot = await getDocs(recipesQuery);
 
         const fetchedRecipes = querySnapshot.docs.map((doc) => ({
@@ -30,12 +33,12 @@ function Home({userId, onLogout}) {
     };
 
     const fetchUserFirstName = async () => {
-      if(userId) {
+      if (userId) {
         try {
           const userDocRef = doc(db, "users", userId);
           const userDoc = await getDoc(userDocRef);
 
-          if(userDoc.exists()) {
+          if (userDoc.exists()) {
             const userData = userDoc.data();
             setFirstName(userData.firstName || "");
           } else {
@@ -51,8 +54,12 @@ function Home({userId, onLogout}) {
     fetchUserFirstName();
   }, [userId]);
 
+  const handleBranchClick = () => {
+    navigate("/branches")
+  };
+
   if (loading) {
-    return <div>Loading recipes...</div>;
+    return <Loading />;
   }
 
   return (
@@ -62,12 +69,12 @@ function Home({userId, onLogout}) {
         <nav className="nav-bar">
           <button className="nav-button active">Home</button>
           <button className="nav-button">Trending</button>
-          <button className="nav-button">Branches</button>
+          <button className="nav-button" onClick={handleBranchClick}>Branches</button>
         </nav>
         <div className="search-bar">
           <input type="text" placeholder="Search" />
         </div>
-        <Link to ={userId ? "/profile" : "/login"}>
+        <Link to={userId ? "/profile" : "/login"}>
           <button className="profile-button">
             {userId ? `Hi, ${firstName}` : "Sign In"}
           </button>
@@ -115,7 +122,9 @@ function Home({userId, onLogout}) {
 
       <div className="post-button-div">
         <Link to="/post">
-          <button className="post-button">Post Recipe</button>
+          <button className="post-button">
+            <CirclePlus size={32} />
+          </button>
         </Link>
       </div>
     </div>
