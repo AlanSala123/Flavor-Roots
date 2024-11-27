@@ -63,7 +63,7 @@ function RecipeDetail({ userId }) {
             const userDoc = await getDoc(userRef);
             const recipeRef = doc(db, "recipes", id);
 
-            if (userDoc.data().likedPosts.includes(id)) {
+            if (userDoc.data().likedPosts?.includes(id)) {
                 await updateDoc(userRef, {
                     likedPosts: arrayRemove(id)
                 });
