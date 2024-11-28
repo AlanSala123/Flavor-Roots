@@ -10,6 +10,7 @@ function Home({ userId, onLogout }) {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [firstName, setFirstName] = useState("");
+  const [userFollowedBranches, setUserFollowedBranches] = useState([]); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,12 +51,39 @@ function Home({ userId, onLogout }) {
       }
     };
 
+    const fetchUserFollowedBranches = async () => {
+      if (userId) {
+        try {
+          const userDocRef = doc(db, "users", userId);
+          const userDoc = await getDoc(userDocRef);
+
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            const followedBranchIds = userData.followed_branches || [];
+
+            // Fetch branch details for each branchId
+            const branchPromises = followedBranchIds.map(async (branchId) => {
+              const branchDocRef = doc(db, "branches", branchId);
+              const branchDoc = await getDoc(branchDocRef);
+              return branchDoc.exists() ? { id: branchId, ...branchDoc.data() } : null;
+            });
+
+            const branchDetails = await Promise.all(branchPromises);
+            setUserFollowedBranches(branchDetails.filter(Boolean)); // Filter out null values
+          }
+        } catch (error) {
+          console.error("Error fetching user's followed branches:", error);
+        }
+      }
+    };
+
     fetchRecipes();
     fetchUserFirstName();
+    fetchUserFollowedBranches();
   }, [userId]);
 
   const handleBranchClick = () => {
-    navigate("/branches")
+    navigate("/branches");
   };
 
   if (loading) {
@@ -69,7 +97,9 @@ function Home({ userId, onLogout }) {
         <nav className="nav-bar">
           <button className="nav-button active">Home</button>
           <button className="nav-button">Trending</button>
-          <button className="nav-button" onClick={handleBranchClick}>Branches</button>
+          <button className="nav-button" onClick={handleBranchClick}>
+            Branches
+          </button>
         </nav>
         <div className="search-bar">
           <input type="text" placeholder="Search" />
@@ -84,14 +114,18 @@ function Home({ userId, onLogout }) {
       <div className="content">
         <aside className="followed-branches">
           <h3>Followed Branches</h3>
-          {userId ? (
-            <>
-              <button className="branch-button">Italian</button>
-              <button className="branch-button">French</button>
-              <button className="branch-button">Spanish</button>
-            </>
+          {userFollowedBranches.length === 0 ? (
+            <p>No Followed Branches</p>
           ) : (
-            <p>Sign in to view</p>
+            userFollowedBranches.map((branch) => (
+              <button
+                key={branch.id}
+                className="branch-button"
+                onClick={() => navigate(`/branches/${branch.id}`)}
+              >
+                {branch.country}
+              </button>
+            ))
           )}
         </aside>
 

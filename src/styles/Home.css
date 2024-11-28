@@ -118,7 +118,6 @@
 .followed-branches p {
   flex: 3;
   color: black; 
-  font-weight: bold;
   text-align: center;
   align-items: center;
 }
