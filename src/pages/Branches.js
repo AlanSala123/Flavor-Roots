@@ -1,16 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { collection, query, orderBy, getDocs, doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import {
+    collection,
+    query,
+    orderBy,
+    getDocs,
+    doc,
+    getDoc,
+    updateDoc,
+    arrayUnion,
+    arrayRemove,
+} from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import "../styles/Branches.css";
 import Loading from "./Loading";
-import { Notebook, SquarePlus, SquareMinus } from 'lucide-react';
+import { Notebook, SquarePlus, SquareMinus } from "lucide-react";
 
 function Branches({ userId }) {
     const [recipes, setRecipes] = useState([]);
+    const [filteredBranches, setFilteredBranches] = useState([]); 
     const [loading, setLoading] = useState(true);
     const [firstName, setFirstName] = useState("");
     const [userFollowedBranches, setUserFollowedBranches] = useState([]);
+    const [searchQuery, setSearchQuery] = useState(""); 
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,6 +38,7 @@ function Branches({ userId }) {
                 }));
 
                 setRecipes(fetchedBranches);
+                setFilteredBranches(fetchedBranches); 
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching branches:", error);
@@ -93,6 +106,18 @@ function Branches({ userId }) {
         }
     };
 
+    // Handle search input change
+    const handleSearchChange = (e) => {
+        const query = e.target.value.toLowerCase();
+        setSearchQuery(query);
+
+        const filtered = recipes.filter((branch) =>
+            branch.country.toLowerCase().includes(query) // Match country name
+        );
+
+        setFilteredBranches(filtered);
+    };
+
     if (loading) {
         return <Loading />;
     }
@@ -102,12 +127,19 @@ function Branches({ userId }) {
             <header className="branches-header">
                 <h1>Flavor Roots</h1>
                 <nav className="branches-nav-bar">
-                    <button className="branches-nav-button" onClick={() => navigate("/home")}>Home</button>
+                    <button className="branches-nav-button" onClick={() => navigate("/home")}>
+                        Home
+                    </button>
                     <button className="branches-nav-button">Trending</button>
                     <button className="branches-nav-button active">Branches</button>
                 </nav>
                 <div className="branches-search-bar">
-                    <input type="text" placeholder="Search Branches" />
+                    <input
+                        type="text"
+                        placeholder="Search Branches"
+                        value={searchQuery} // Controlled input
+                        onChange={handleSearchChange} // Live search
+                    />
                 </div>
                 <Link to={userId ? "/profile" : "/login"}>
                     <button className="branches-profile-button">
@@ -124,7 +156,9 @@ function Branches({ userId }) {
                             <p>No Followed Branches</p>
                         ) : (
                             userFollowedBranches.map((followedBranchId) => {
-                                const followedBranch = recipes.find(branch => branch.id === followedBranchId);
+                                const followedBranch = recipes.find(
+                                    (branch) => branch.id === followedBranchId
+                                );
                                 return followedBranch ? (
                                     <button
                                         key={followedBranch.id}
@@ -139,36 +173,36 @@ function Branches({ userId }) {
                     </div>
                 </aside>
                 <section className="branches-post-feed">
-                    {recipes.map((branch) => {
-                        const isFollowing = userFollowedBranches.includes(branch.id);
-                        return (
-                            <div key={branch.id} className="branches-branch-card">
-                                <Link to={`/branches/${branch.id}`} className="branch-link">
-                                    {/* Recipe Count Badge */}
-                                    <div className="branches-recipe-count">
-                                        <Notebook size={16} className="branches-recipe-icon" />
-                                        <span>{branch.recipes?.length}</span>
-                                    </div>
+                    {filteredBranches.length === 0 ? (
+                        <p className="branches-no-branches-message">No Branches Found</p>
+                    ) : (
+                        filteredBranches.map((branch) => {
+                            const isFollowing = userFollowedBranches.includes(branch.id);
+                            return (
+                                <div key={branch.id} className="branches-branch-card">
+                                    <Link to={`/branches/${branch.id}`} className="branch-link">
+                                        {/* Recipe Count Badge */}
+                                        <div className="branches-recipe-count">
+                                            <Notebook size={16} className="branches-recipe-icon" />
+                                            <span>{branch.recipes?.length}</span>
+                                        </div>
 
-                                    {/* Main Card Content */}
-                                    <div className="branches-branch-card-content">
-                                        <h4 className="branches-branch-country">{branch.country}</h4>
-                                    </div>
-                                </Link>
-                                {/* Square Icon Button */}
-                                <button
-                                    className="branches-square-plus"
-                                    onClick={() => handleIconClick(branch.id, isFollowing)}
-                                >
-                                    {isFollowing ? (
-                                        <SquareMinus size={24} />
-                                    ) : (
-                                        <SquarePlus size={24} />
-                                    )}
-                                </button>
-                            </div>
-                        );
-                    })}
+                                        {/* Main Card Content */}
+                                        <div className="branches-branch-card-content">
+                                            <h4 className="branches-branch-country">{branch.country}</h4>
+                                        </div>
+                                    </Link>
+                                    {/* Square Icon Button */}
+                                    <button
+                                        className="branches-square-plus"
+                                        onClick={() => handleIconClick(branch.id, isFollowing)}
+                                    >
+                                        {isFollowing ? <SquareMinus size={24} /> : <SquarePlus size={24} />}
+                                    </button>
+                                </div>
+                            );
+                        })
+                    )}
                 </section>
             </div>
 
