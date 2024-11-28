@@ -18,6 +18,7 @@ import EditProfile from "./pages/EditProfile";
 import Branches from "./pages/Branches";
 import BranchDetail from "./pages/BranchDetail";
 import NewBranch from "./pages/NewBranch";
+import Trending from "./pages/Trending";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -85,6 +86,7 @@ function App() {
         <Route path="/branches" element={isLoggedIn ? <Branches userId={userId} /> : <Navigate to="/login" />} />
         <Route path="/branches/:branchId" element={isLoggedIn ? <BranchDetail userId={userId} /> : <Navigate to="/login" />} />
         <Route path="/newbranch" element={isLoggedIn ? <NewBranch userId={userId} /> : <Navigate to="/login" />} />
+        <Route path="/trending" element={isLoggedIn ? <Trending userId={userId} /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );
