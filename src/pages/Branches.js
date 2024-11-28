@@ -130,7 +130,7 @@ function Branches({ userId }) {
                     <button className="branches-nav-button" onClick={() => navigate("/home")}>
                         Home
                     </button>
-                    <button className="branches-nav-button">Trending</button>
+                    <button className="branches-nav-button" onClick={()=>navigate("/trending")}>Trending</button>
                     <button className="branches-nav-button active">Branches</button>
                 </nav>
                 <div className="branches-search-bar">

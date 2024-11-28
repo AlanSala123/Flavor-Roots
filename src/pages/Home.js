@@ -8,11 +8,11 @@ import { CirclePlus } from 'lucide-react';
 
 function Home({ userId, onLogout }) {
   const [recipes, setRecipes] = useState([]);
-  const [filteredRecipes, setFilteredRecipes] = useState([]); 
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [firstName, setFirstName] = useState("");
   const [userFollowedBranches, setUserFollowedBranches] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(""); 
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -72,7 +72,7 @@ function Home({ userId, onLogout }) {
             });
 
             const branchDetails = await Promise.all(branchPromises);
-            setUserFollowedBranches(branchDetails.filter(Boolean)); 
+            setUserFollowedBranches(branchDetails.filter(Boolean));
           }
         } catch (error) {
           console.error("Error fetching user's followed branches:", error);
@@ -108,7 +108,7 @@ function Home({ userId, onLogout }) {
         <h1>Flavor Roots</h1>
         <nav className="nav-bar">
           <button className="nav-button active">Home</button>
-          <button className="nav-button">Trending</button>
+          <button className="nav-button" onClick={()=>navigate("/trending")}>Trending</button>
           <button className="nav-button" onClick={handleBranchClick}>
             Branches
           </button>
@@ -131,18 +131,22 @@ function Home({ userId, onLogout }) {
       <div className="content">
         <aside className="followed-branches">
           <h3>Followed Branches</h3>
-          {userFollowedBranches.length === 0 ? (
-            <p>No Followed Branches</p>
+          {userId ? ( // Check if userId is present
+            userFollowedBranches.length === 0 ? (
+              <p>No Followed Branches</p>
+            ) : (
+              userFollowedBranches.map((branch) => (
+                <button
+                  key={branch.id}
+                  className="branch-button"
+                  onClick={() => navigate(`/branches/${branch.id}`)}
+                >
+                  {branch.country}
+                </button>
+              ))
+            )
           ) : (
-            userFollowedBranches.map((branch) => (
-              <button
-                key={branch.id}
-                className="branch-button"
-                onClick={() => navigate(`/branches/${branch.id}`)}
-              >
-                {branch.country}
-              </button>
-            ))
+            <p>Sign in to view</p>
           )}
         </aside>
 
