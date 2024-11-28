@@ -8,9 +8,11 @@ import { CirclePlus } from 'lucide-react';
 
 function Home({ userId, onLogout }) {
   const [recipes, setRecipes] = useState([]);
+  const [filteredRecipes, setFilteredRecipes] = useState([]); 
   const [loading, setLoading] = useState(true);
   const [firstName, setFirstName] = useState("");
-  const [userFollowedBranches, setUserFollowedBranches] = useState([]); 
+  const [userFollowedBranches, setUserFollowedBranches] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,6 +28,7 @@ function Home({ userId, onLogout }) {
         }));
 
         setRecipes(fetchedRecipes);
+        setFilteredRecipes(fetchedRecipes); // Initialize filtered recipes
         setLoading(false);
       } catch (error) {
         console.error("Error fetching recipes:", error);
@@ -69,7 +72,7 @@ function Home({ userId, onLogout }) {
             });
 
             const branchDetails = await Promise.all(branchPromises);
-            setUserFollowedBranches(branchDetails.filter(Boolean)); // Filter out null values
+            setUserFollowedBranches(branchDetails.filter(Boolean)); 
           }
         } catch (error) {
           console.error("Error fetching user's followed branches:", error);
@@ -81,6 +84,15 @@ function Home({ userId, onLogout }) {
     fetchUserFirstName();
     fetchUserFollowedBranches();
   }, [userId]);
+
+  // Update filtered recipes when search query changes
+  useEffect(() => {
+    const lowerCaseQuery = searchQuery.toLowerCase();
+    const filtered = recipes.filter((recipe) =>
+      recipe.recipeName.toLowerCase().includes(lowerCaseQuery)
+    );
+    setFilteredRecipes(filtered);
+  }, [searchQuery, recipes]);
 
   const handleBranchClick = () => {
     navigate("/branches");
@@ -102,7 +114,12 @@ function Home({ userId, onLogout }) {
           </button>
         </nav>
         <div className="search-bar">
-          <input type="text" placeholder="Search" />
+          <input
+            type="text"
+            placeholder="Search Recipes"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)} // Update search query state
+          />
         </div>
         <Link to={userId ? "/profile" : "/login"}>
           <button className="profile-button">
@@ -130,10 +147,10 @@ function Home({ userId, onLogout }) {
         </aside>
 
         <section className="post-feed">
-          {recipes.length === 0 ? (
+          {filteredRecipes.length === 0 ? (
             <p>No recipes found</p>
           ) : (
-            recipes.map((recipe) => (
+            filteredRecipes.map((recipe) => (
               <Link to={`/recipe/${recipe.id}`} key={recipe.id} className="post-link">
                 <div className="post">
                   <div className="post-content">

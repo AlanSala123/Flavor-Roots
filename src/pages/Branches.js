@@ -207,7 +207,7 @@ function Branches({ userId }) {
             </div>
 
             <div className="branches-post-button-div">
-                <button className="branches-post-button">New Branch</button>
+                <button className="branches-post-button" onClick={()=>navigate("/newbranch")}>New Branch</button>
             </div>
         </div>
     );
