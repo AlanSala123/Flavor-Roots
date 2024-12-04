@@ -78,7 +78,7 @@ function Post({ userId }) {
                 recipe: formData.recipe,
                 branchName: formData.branchName,
                 caption: formData.caption,
-                imageUrl: imageUrl || null, 
+                imageUrl: imageUrl || "/norecipe.png", 
                 userId: formData.userId,
                 createdAt: new Date(),
                 likes: 0,
