@@ -1,115 +1,129 @@
 /* Recipe Detail Page Styles */
 .recipe-detail-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #F9F3E1, #A8CBB7); /* Warm Cream to Soft Sage Green gradient */
-    color: #333333; /* Deep Charcoal text color */
-    padding: 0 20px;
-  }
-  
-  .recipe-card {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    gap: 20px;
-    background-color: #FFFFFF; 
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); 
-    max-width: 500px;
-    width: 100%;
-    box-sizing: border-box;
-    transition: transform 0.3s ease-in-out; 
-    align-items: center;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #F9F3E1, #A8CBB7); /* Warm Cream to Soft Sage Green gradient */
+  color: #333333; /* Deep Charcoal text color */
+  padding: 0 20px;
+}
 
-  .recipe-card:hover {
-    transform: scale(1.05); 
-  }
-  
-  .recipe-card-image {
-    max-width: 200px;
-    max-height: 200px;
-    width: auto;
-    height: auto;
-    border-radius: 8px;
-    margin-top: 20px;
-    object-fit: cover; /* Ensures image fits within the bounds */
-  }
-  
-  .recipe-card-content {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .recipe-card h3 {
-    font-size: 1.8em;
-    color: #333333; /* Deep Charcoal for recipe title */
-    font-weight: bold;
-    margin-bottom: 8px;
-  }
-  
-  .recipe-card p {
-    font-size: 1.1em;
-    color: #333333; /* Deep Charcoal for text */
-  }
-  
-  .recipe-card .recipe-caption {
-    font-style: italic;
-    color: #A8CBB7; /* Soft Sage Green for captions */
-    margin-top: 10px;
-  }
-  
-  .recipe-card .recipe-branch {
-    color: #F16C57; /* Tomato Red for the recipe branch */
-    font-weight: bold;
-    margin-top: 5px;
-  }
-  
-  .recipe-card .button-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  
-  .recipe-card .edit-button,
-  .recipe-card .delete-button {
-    padding: 12px 20px;
-    border-radius: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    width: 48%; /* Both buttons will take up equal width */
-    box-sizing: border-box;
-  }
-  
-  .recipe-card .edit-button {
-    background-color: #DFAF3C; /* Golden Honey for Edit button */
-    color: #333333; /* Deep Charcoal text */
-    border: none;
-  }
-  
-  .recipe-card .edit-button:hover {
-    background-color: #F16C57; /* Tomato Red on hover */
-  }
-  
-  .recipe-card .delete-button {
-    background-color: #F9F3E1; /* Warm Cream for Delete button */
-    color: #F16C57; /* Tomato Red for Delete text */
-    border: 1px solid #F16C57; /* Tomato Red border */
-  }
-  
-  .recipe-card .delete-button:hover {
-    background-color: #F16C57; /* Tomato Red background on hover */
-    color: #FFFFFF; /* White text when hovered */
-  }
-  
-  .recipe-card .button-container button:disabled {
-    background-color: #d3d3d3;
-    cursor: not-allowed;
-  }
-  
+.recipe-card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 20px;
+  background-color: #FFFFFF;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: transform 0.3s ease-in-out;
+  align-items: center;
+}
+
+.recipe-card:hover {
+  transform: scale(1.05);
+}
+
+.recipe-card-image {
+  max-width: 200px;
+  max-height: 200px;
+  width: auto;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 20px;
+  object-fit: cover; /* Ensures image fits within the bounds */
+}
+
+.recipe-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.recipe-card h3 {
+  font-size: 1.8em;
+  color: #333333; /* Deep Charcoal for recipe title */
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.recipe-card p {
+  font-size: 1.1em;
+  color: #333333; /* Deep Charcoal for text */
+}
+
+.recipe-card .recipe-caption {
+  font-style: italic;
+  color: #A8CBB7; /* Soft Sage Green for captions */
+  margin-top: 10px;
+}
+
+.recipe-card .recipe-branch {
+  color: #F16C57; /* Tomato Red for the recipe branch */
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+/* NEW: Branch badge */
+.branch-badge {
+  position: absolute;
+  top: 20px; /* Adjust the distance from the top */
+  left: 20px; /* Adjust the distance from the left */
+  background-color: #F6C100; /* Yellow color */
+  color: #FFFFFF; /* White text */
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 16px; /* Rounded corners for the badge */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+  z-index: 10;
+}
+
+.recipe-card .button-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.recipe-card .edit-button,
+.recipe-card .delete-button {
+  padding: 12px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 48%; /* Both buttons will take up equal width */
+  box-sizing: border-box;
+}
+
+.recipe-card .edit-button {
+  background-color: #DFAF3C; /* Golden Honey for Edit button */
+  color: #333333; /* Deep Charcoal text */
+  border: none;
+}
+
+.recipe-card .edit-button:hover {
+  background-color: #F16C57; /* Tomato Red on hover */
+}
+
+.recipe-card .delete-button {
+  background-color: #F9F3E1; /* Warm Cream for Delete button */
+  color: #F16C57; /* Tomato Red for Delete text */
+  border: 1px solid #F16C57; /* Tomato Red border */
+}
+
+.recipe-card .delete-button:hover {
+  background-color: #F16C57; /* Tomato Red background on hover */
+  color: #FFFFFF; /* White text when hovered */
+}
+
+.recipe-card .button-container button:disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
+}

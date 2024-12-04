@@ -94,12 +94,12 @@ function RecipeDetail({ userId }) {
     return (
         <div className="recipe-detail-container">
             <div className="recipe-card">
+                <span className="branch-badge">{recipe.branchName}</span>
                 <img src={recipe.imageUrl} alt={recipe.recipeName} className="recipe-card-image" />
                 <div className="recipe-card-content">
                     <h3>{recipe.recipeName}</h3>
                     <p><strong>Caption:</strong> {recipe.caption}</p>
                     <p><strong>Recipe:</strong> {recipe.recipe}</p>
-                    <p><strong>Branch:</strong> {recipe.branchName}</p>
                     <p><strong>Likes:</strong> {likeNum ?? 0}</p>
                 </div>
                 <ThumbsUp
