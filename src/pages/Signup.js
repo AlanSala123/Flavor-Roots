@@ -52,7 +52,7 @@ function Signup() {
       password: hashedPassword,
       firstName: firstName,
       lastName: lastName,
-      profilePicture: profilePictureBase64,
+      profilePicture: profilePictureBase64 || "/noprofilepic.png",
     });
 
     alert("Signup successful! Please log in.");
