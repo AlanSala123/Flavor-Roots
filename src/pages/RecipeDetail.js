@@ -11,9 +11,11 @@ function RecipeDetail({ userId }) {
     const [recipe, setRecipe] = useState(null);
     const [isLiked, setIsLiked] = useState(false);
     const [likeNum, setLikeNum] = useState(0);
+    const [author, setAuthor] = useState(""); // State to hold author's name
     const navigate = useNavigate();
     const location = useLocation();
 
+    // Fetch recipe and author details
     useEffect(() => {
         const fetchRecipe = async () => {
             try {
@@ -22,7 +24,9 @@ function RecipeDetail({ userId }) {
 
                 if (docSnap.exists()) {
                     setRecipe(docSnap.data());
-                    setLikeNum(docSnap.data().likes || 0)
+                    setLikeNum(docSnap.data().likes || 0);
+                    const authorName = await fetchAuthor(docSnap.data().userId); // Fetch author's name
+                    setAuthor(authorName);
                 } else {
                     console.log("No such recipe!");
                 }
@@ -49,6 +53,25 @@ function RecipeDetail({ userId }) {
         fetchUserLikes();
     }, [id, userId]);
 
+    // Fetch author's name based on userId
+    const fetchAuthor = async (userId) => {
+        try {
+            const userRef = doc(db, "users", userId);
+            const userDoc = await getDoc(userRef);
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                return `${userData.firstName} ${userData.lastName}`;  // Combine first and last name
+            } else {
+                console.log("User not found!");
+                return "";
+            }
+        } catch (error) {
+            console.error("Error fetching user data: ", error);
+            return "";
+        }
+    };
+
+    // Handle back button click
     const handleBackClick = () => {
         if (location.state?.from === "/post") {
             navigate("/home");
@@ -57,6 +80,7 @@ function RecipeDetail({ userId }) {
         }
     };
 
+    // Handle like button click
     const handleLikeClick = async () => {
         try {
             const userRef = doc(db, "users", userId);
@@ -101,6 +125,8 @@ function RecipeDetail({ userId }) {
                     <p><strong>Caption:</strong> {recipe.caption}</p>
                     <p><strong>Recipe:</strong> {recipe.recipe}</p>
                     <p><strong>Likes:</strong> {likeNum ?? 0}</p>
+                    {/* Display the author's name at the bottom left */}
+                    <span className="author-badge">{author}</span>
                 </div>
                 <ThumbsUp
                     onClick={handleLikeClick}

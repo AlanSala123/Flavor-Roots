@@ -84,6 +84,17 @@
   z-index: 10;
 }
 
+/* NEW: Author name at the bottom-left of the card */
+.recipe-card .author-badge {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 1em;
+  font-weight: bold;
+  color: #333333; /* Dark color for the author's name */
+}
+
+
 .recipe-card .button-container {
   display: flex;
   justify-content: space-between;
