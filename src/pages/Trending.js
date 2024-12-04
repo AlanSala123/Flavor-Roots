@@ -1,21 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { collection, query, orderBy, getDocs, doc, getDoc } from "firebase/firestore";
+import { collection, query, orderBy, where, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { CirclePlus } from 'lucide-react';
 import Loading from "./Loading";
 
 function Trending({ userId }) {
     const [recipes, setRecipes] = useState([]);
+    const [filteredRecipes, setFilteredRecipes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [firstName, setFirstName] = useState("");
+    const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchTrendingRecipes = async () => {
             try {
+                const now = new Date();
+                const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+
                 const recipesRef = collection(db, "recipes");
-                const recipesQuery = query(recipesRef, orderBy("createdAt", "desc"));
+                const recipesQuery = query(
+                    recipesRef,
+                    where("createdAt", ">=", twentyFourHoursAgo),
+                    orderBy("createdAt") // Firestore requires ordering by the field used in where inequality
+                );
                 const querySnapshot = await getDocs(recipesQuery);
 
                 const fetchedRecipes = querySnapshot.docs.map((doc) => ({
@@ -23,7 +32,11 @@ function Trending({ userId }) {
                     ...doc.data(),
                 }));
 
+                // Sort the recipes by likes in descending order
+                fetchedRecipes.sort((a, b) => (b.likes || 0) - (a.likes || 0));
+
                 setRecipes(fetchedRecipes);
+                setFilteredRecipes(fetchedRecipes); // Initialize filtered recipes
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching trending recipes:", error);
@@ -51,7 +64,16 @@ function Trending({ userId }) {
 
         fetchTrendingRecipes();
         fetchUserFirstName();
-    }, []);
+    }, [userId]);
+
+    // Update filtered recipes when search query changes
+    useEffect(() => {
+        const lowerCaseQuery = searchQuery.toLowerCase();
+        const filtered = recipes.filter((recipe) =>
+            recipe.recipeName.toLowerCase().includes(lowerCaseQuery)
+        );
+        setFilteredRecipes(filtered);
+    }, [searchQuery, recipes]);
 
     if (loading) {
         return <Loading />;
@@ -72,6 +94,8 @@ function Trending({ userId }) {
                     <input
                         type="text"
                         placeholder="Search Trending Recipes"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
                 <button className="branches-profile-button" onClick={() => navigate("/profile")}>
@@ -87,21 +111,26 @@ function Trending({ userId }) {
                     <button className="branch-button">France</button>
                 </aside>
                 <section className="post-feed">
-                    {recipes.map((recipe) => (
-                        <div key={recipe.id} className="post">
-                            <div className="post-content">
-                                <p>{recipe.recipeName}</p>
-                                <p>{recipe.caption}</p>
+                    {filteredRecipes.length === 0 ? (
+                        <p>No recipes found</p>
+                    ) : (
+                        filteredRecipes.map((recipe) => (
+                            <div key={recipe.id} className="post">
+                                <div className="post-content">
+                                    <p>{recipe.recipeName}</p>
+                                    <p>{recipe.caption}</p>
+                                    <p>Likes: {recipe.likes || 0}</p>
+                                </div>
+                                <div className="post-image">
+                                    <img
+                                        src={recipe.imageUrl}
+                                        alt={recipe.caption}
+                                        className="small-image"
+                                    />
+                                </div>
                             </div>
-                            <div className="post-image">
-                                <img
-                                    src={recipe.imageUrl}
-                                    alt={recipe.caption}
-                                    className="small-image"
-                                />
-                            </div>
-                        </div>
-                    ))}
+                        ))
+                    )}
                 </section>
             </div>
             <div className="post-button-div">
