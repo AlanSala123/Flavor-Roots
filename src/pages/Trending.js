@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { collection, query, orderBy, where, getDocs, doc, getDoc } from "firebase/firestore";
+import { collection, query, orderBy, where, limit, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
-import { CirclePlus } from 'lucide-react';
+import { CirclePlus } from "lucide-react";
 import Loading from "./Loading";
+import { Notebook } from "lucide-react";
 
 function Trending({ userId }) {
     const [recipes, setRecipes] = useState([]);
@@ -11,19 +12,20 @@ function Trending({ userId }) {
     const [loading, setLoading] = useState(true);
     const [firstName, setFirstName] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
+    const [topBranches, setTopBranches] = useState([]); // Top branches state
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchTrendingRecipes = async () => {
             try {
                 const now = new Date();
-                const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+                const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
 
                 const recipesRef = collection(db, "recipes");
                 const recipesQuery = query(
                     recipesRef,
-                    where("createdAt", ">=", twentyFourHoursAgo),
-                    orderBy("createdAt") // Firestore requires ordering by the field used in where inequality
+                    orderBy("createdAt"),
+                    where("createdAt", ">=", twentyFourHoursAgo)
                 );
                 const querySnapshot = await getDocs(recipesQuery);
 
@@ -32,15 +34,31 @@ function Trending({ userId }) {
                     ...doc.data(),
                 }));
 
-                // Sort the recipes by likes in descending order
                 fetchedRecipes.sort((a, b) => (b.likes || 0) - (a.likes || 0));
-
                 setRecipes(fetchedRecipes);
-                setFilteredRecipes(fetchedRecipes); // Initialize filtered recipes
-                setLoading(false);
+                setFilteredRecipes(fetchedRecipes);
             } catch (error) {
                 console.error("Error fetching trending recipes:", error);
-                setLoading(false);
+            }
+        };
+
+        const fetchTopBranches = async () => {
+            try {
+                const branchesRef = collection(db, "branches");
+                const querySnapshot = await getDocs(branchesRef);
+                const fetchedBranches = querySnapshot.docs.map((doc) => {
+                    const data = doc.data();
+                    return {
+                        id: doc.id,
+                        ...data,
+                        recipeCount: data.recipes?.length || 0,
+                    };
+                });
+                const sortedBranches = fetchedBranches.sort((a, b) => b.recipeCount - a.recipeCount);
+                const topBranches = sortedBranches.slice(0, 5);
+                setTopBranches(topBranches);
+            } catch (error) {
+                console.error("Error fetching top branches:", error);
             }
         };
 
@@ -53,8 +71,6 @@ function Trending({ userId }) {
                     if (userDoc.exists()) {
                         const userData = userDoc.data();
                         setFirstName(userData.firstName || "");
-                    } else {
-                        console.error("User document does not exist");
                     }
                 } catch (error) {
                     console.error("Error fetching user first name:", error);
@@ -63,10 +79,11 @@ function Trending({ userId }) {
         };
 
         fetchTrendingRecipes();
+        fetchTopBranches(); // Fetch top branches
         fetchUserFirstName();
+        setLoading(false);
     }, [userId]);
 
-    // Update filtered recipes when search query changes
     useEffect(() => {
         const lowerCaseQuery = searchQuery.toLowerCase();
         const filtered = recipes.filter((recipe) =>
@@ -88,7 +105,9 @@ function Trending({ userId }) {
                         Home
                     </button>
                     <button className="branches-nav-button active">Trending</button>
-                    <button className="branches-nav-button" onClick={() => navigate("/branches")}>Branches</button>
+                    <button className="branches-nav-button" onClick={() => navigate("/branches")}>
+                        Branches
+                    </button>
                 </nav>
                 <div className="branches-search-bar">
                     <input
@@ -105,30 +124,42 @@ function Trending({ userId }) {
 
             <div className="content">
                 <aside className="followed-branches">
-                    <h3>Trending Branches</h3>
-                    <button className="branch-button">Italy</button>
-                    <button className="branch-button">Mexico</button>
-                    <button className="branch-button">France</button>
+                    <h3>Most Posted Branches</h3>
+                    {topBranches.map((branch) => (
+                        <button
+                            key={branch.id}
+                            className="branch-button"
+                            onClick={() => navigate(`/branches/${branch.id}`)}
+                        >
+                            <span className="branch-country">{branch.country}</span>
+                            <div className="branch-info">
+                                <Notebook className="notebook-icon" />
+                                <span className="branch-recipe-count">{branch.recipeCount}</span>
+                            </div>
+                        </button>
+                    ))}
                 </aside>
                 <section className="post-feed">
                     {filteredRecipes.length === 0 ? (
                         <p>No recipes found</p>
                     ) : (
                         filteredRecipes.map((recipe) => (
-                            <div key={recipe.id} className="post">
-                                <div className="post-content">
-                                    <p>{recipe.recipeName}</p>
-                                    <p>{recipe.caption}</p>
-                                    <p>Likes: {recipe.likes || 0}</p>
+                            <Link to={`/recipe/${recipe.id}`} key={recipe.id} className="post-link">
+                                <div key={recipe.id} className="post">
+                                    <div className="post-content">
+                                        <p>{recipe.recipeName}</p>
+                                        <p>{recipe.caption}</p>
+                                        <p>Likes: {recipe.likes || 0}</p>
+                                    </div>
+                                    <div className="post-image">
+                                        <img
+                                            src={recipe.imageUrl}
+                                            alt={recipe.caption}
+                                            className="small-image"
+                                        />
+                                    </div>
                                 </div>
-                                <div className="post-image">
-                                    <img
-                                        src={recipe.imageUrl}
-                                        alt={recipe.caption}
-                                        className="small-image"
-                                    />
-                                </div>
-                            </div>
+                            </Link>
                         ))
                     )}
                 </section>
