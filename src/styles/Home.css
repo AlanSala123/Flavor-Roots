@@ -196,6 +196,27 @@
   opacity: 0.8;
 }
 
+.branch-country {
+  font-weight: bold;
+}
+
+.branch-info {
+  display: flex;
+  align-items: center;
+  gap: 5px; 
+}
+
+.notebook-icon {
+  width: 16px; 
+  height: 16px;
+  color: white 
+}
+
+.branch-recipe-count {
+  font-size: 14px;
+  color: white
+}
+
 @media (max-width: 768px) {
   .content {
     flex-direction: column;
