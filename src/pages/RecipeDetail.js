@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { doc, getDoc, updateDoc, arrayUnion, arrayRemove, increment } from "firebase/firestore";
+import { doc, getDoc, updateDoc, arrayUnion, arrayRemove, increment, deleteDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import "../styles/RecipeDetail.css";
 import Loading from "./Loading";
-import { ThumbsUp } from 'lucide-react';
+import { ThumbsUp, Trash2 } from 'lucide-react';
 
 function RecipeDetail({ userId }) {
     const { id } = useParams();
     const [recipe, setRecipe] = useState(null);
     const [isLiked, setIsLiked] = useState(false);
     const [likeNum, setLikeNum] = useState(0);
+    const [isAuthor, setIsAuthor] = useState(false);
     const [author, setAuthor] = useState(""); // State to hold author's name
     const navigate = useNavigate();
     const location = useLocation();
@@ -27,6 +28,7 @@ function RecipeDetail({ userId }) {
                     setLikeNum(docSnap.data().likes || 0);
                     const authorName = await fetchAuthor(docSnap.data().userId); // Fetch author's name
                     setAuthor(authorName);
+                    setIsAuthor(docSnap.data().userId === userId)
                 } else {
                     console.log("No such recipe!");
                 }
@@ -111,6 +113,24 @@ function RecipeDetail({ userId }) {
         }
     };
 
+    const handleDeletePost = async () => {
+        const confirmDelete = window.confirm(
+            "Are you sure you want to delete this post? This action cannot be undone."
+        );
+    
+        if (confirmDelete) {
+            try {
+                const recipeRef = doc(db, "recipes", id);
+                await deleteDoc(recipeRef); 
+                alert("Recipe deleted successfully!");
+                navigate("/home", { state: { message: "Recipe deleted successfully!" } }); 
+            } catch (error) {
+                console.error("Error deleting the post:", error);
+                alert("Failed to delete the post. Please try again.");
+            }
+        }
+    };
+
     if (!recipe) {
         return <Loading />;
     }
@@ -142,6 +162,34 @@ function RecipeDetail({ userId }) {
                     }}
                     stroke={isLiked ? 'none' : '#DFAF3C'}
                 />
+            </div>
+            <div>
+                {isAuthor && (
+                    <button
+                        className="delete-post-button"
+                        onClick={handleDeletePost}
+                        style={{
+                            position: "absolute",
+                            bottom: "20px",
+                            right: "20px",
+                            display: "flex",
+                            alignItems: "center",
+                            backgroundColor: "#FF4C4C",
+                            color: "#FFF",
+                            border: "none",
+                            borderRadius: "8px",
+                            padding: "10px 15px",
+                            cursor: "pointer",
+                            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+                            transition: "background-color 0.3s ease",
+                        }}
+                        onMouseEnter={(e) => (e.target.style.backgroundColor = "#E63946")}
+                        onMouseLeave={(e) => (e.target.style.backgroundColor = "#FF4C4C")}
+                    >
+                        <Trash2 style={{ marginRight: "8px" }} />
+                        Delete Post
+                    </button>
+                )}
             </div>
             <button className="back-button" onClick={handleBackClick}>Back</button>
         </div>
